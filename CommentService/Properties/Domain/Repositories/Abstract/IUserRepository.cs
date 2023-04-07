@@ -1,13 +1,14 @@
 ﻿using CommentService.Models;
+using CommentService.Properties.Domain.Enteties;
 
 namespace CommentService.Properties.Domain.Repositories.Abstract
 {
     public interface IUserRepository
     {
-        Task CreateUser(UserRequestDTO user);
-        void UpdateUser(UserRequestDTO user);
-        Task<UserResponseDTO> GetUserById(string userId);
-        Task<List<UserResponseDTO>> GetAllUsers();
-        Task DeleteUser(string userId);
+        Task CreateUserAsync(User user);
+        Task UpdateUserAsync(User user);
+        Task<User> GetUserByIdAsync(string userId);
+        Task<List<User>> GetAllUsersAsync();
+        Task DeleteUserAsync(string userId);
     }
 }

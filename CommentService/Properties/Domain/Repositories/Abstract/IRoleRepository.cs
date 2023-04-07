@@ -5,10 +5,10 @@ namespace CommentService.Properties.Domain.Repositories.Abstract
 {
     public interface IRoleRepository
     {
-        Task CreateRole(RoleRequestDTO user);
-        void UpdateRole(RoleRequestDTO user);
-        Task<Role> GetRoleById(string userId);
-        Task<List<Role>> GetAllRoles();
-        Task DeleteRole(string userId);
+        Task CreateRoleAsync(Role role);
+        Task UpdateRoleAsync(Role role);
+        Task<Role> GetRoleByIdAsync(string roleId);
+        Task<List<Role>> GetAllRolesAsync();
+        Task DeleteRoleAsync(string roleId);
     }
 }

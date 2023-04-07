@@ -1,3 +1,6 @@
+using CommentService.Properties.Domain;
+using Microsoft.EntityFrameworkCore;
+
 namespace CommentService
 {
     public class Program
@@ -5,6 +8,7 @@ namespace CommentService
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+            builder.Services.AddDbContext<AppDbContext>(s => s.UseSqlServer(builder.Configuration.GetSection("ConnectionString").Value));
 
             // Add services to the container.
 
