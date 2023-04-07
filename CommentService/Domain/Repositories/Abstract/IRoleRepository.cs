@@ -1,7 +1,7 @@
-﻿using CommentService.Models;
-using CommentService.Properties.Domain.Enteties;
+﻿using CommentService.Domain.Enteties;
+using CommentService.Models;
 
-namespace CommentService.Properties.Domain.Repositories.Abstract
+namespace CommentService.Domain.Repositories.Abstract
 {
     public interface IRoleRepository
     {

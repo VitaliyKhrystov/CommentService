@@ -1,9 +1,9 @@
-﻿using CommentService.Models;
-using CommentService.Properties.Domain.Enteties;
-using CommentService.Properties.Domain.Repositories.Abstract;
+﻿using CommentService.Domain.Enteties;
+using CommentService.Domain.Repositories.Abstract;
+using CommentService.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace CommentService.Properties.Domain.Repositories
+namespace CommentService.Domain.Repositories
 {
     public class UserRepositoryEF : IUserRepository
     {
@@ -15,8 +15,8 @@ namespace CommentService.Properties.Domain.Repositories
         }
         public async Task CreateUserAsync(User user)
         {
-           await dbContext.Users.AddAsync(user);
-           await dbContext.SaveChangesAsync();
+            await dbContext.Users.AddAsync(user);
+            await dbContext.SaveChangesAsync();
         }
 
         public async Task DeleteUserAsync(string userId)
@@ -41,7 +41,7 @@ namespace CommentService.Properties.Domain.Repositories
 
         public async Task UpdateUserAsync(User user)
         {
-            if(await dbContext.Users.AnyAsync(u => u.Id == user.Id))
+            if (await dbContext.Users.AnyAsync(u => u.Id == user.Id))
             {
                 dbContext.Users.Update(user);
                 await dbContext.SaveChangesAsync();
@@ -52,14 +52,14 @@ namespace CommentService.Properties.Domain.Repositories
 
         public virtual void Dispose(bool disposing)
         {
-            if (!this.disposed)
+            if (!disposed)
             {
                 if (disposing)
                 {
                     dbContext.Dispose();
                 }
             }
-            this.disposed = true;
+            disposed = true;
         }
 
         public void Dispose()

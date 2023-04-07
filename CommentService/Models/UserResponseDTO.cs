@@ -1,4 +1,4 @@
-﻿using CommentService.Properties.Domain.Enteties;
+﻿using CommentService.Domain.Enteties;
 
 namespace CommentService.Models
 {

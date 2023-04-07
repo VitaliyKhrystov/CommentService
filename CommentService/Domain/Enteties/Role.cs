@@ -1,4 +1,4 @@
-﻿namespace CommentService.Properties.Domain.Enteties
+﻿namespace CommentService.Domain.Enteties
 {
     public class Role
     {

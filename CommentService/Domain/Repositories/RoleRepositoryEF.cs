@@ -1,9 +1,9 @@
-﻿using CommentService.Models;
-using CommentService.Properties.Domain.Enteties;
-using CommentService.Properties.Domain.Repositories.Abstract;
+﻿using CommentService.Domain.Enteties;
+using CommentService.Domain.Repositories.Abstract;
+using CommentService.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace CommentService.Properties.Domain.Repositories
+namespace CommentService.Domain.Repositories
 {
     public class RoleRepositoryEF : IRoleRepository
     {
@@ -40,7 +40,7 @@ namespace CommentService.Properties.Domain.Repositories
 
         public async Task UpdateRoleAsync(Role role)
         {
-            if (await dbContext.Roles.AnyAsync(r=> r.Id == role.Id))
+            if (await dbContext.Roles.AnyAsync(r => r.Id == role.Id))
             {
                 dbContext.Roles.Update(role);
                 await dbContext.SaveChangesAsync();
@@ -52,14 +52,14 @@ namespace CommentService.Properties.Domain.Repositories
 
         public virtual void Dispose(bool disposing)
         {
-            if (!this.disposed)
+            if (!disposed)
             {
                 if (disposing)
                 {
                     dbContext.Dispose();
                 }
             }
-            this.disposed = true;
+            disposed = true;
         }
 
         public void Dispose()

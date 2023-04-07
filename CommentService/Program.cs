@@ -1,4 +1,4 @@
-using CommentService.Properties.Domain;
+using CommentService.Domain;
 using Microsoft.EntityFrameworkCore;
 
 namespace CommentService
