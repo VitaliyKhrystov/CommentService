@@ -1,4 +1,5 @@
 ﻿using CommentService.Domain;
+using CommentService.Models;
 using CommentService.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -20,6 +21,13 @@ namespace CommentService.Controllers
             this.jWTservice = jWTservice;
         }
 
+        [HttpPost ("register")]
+        public async Task<IAsyncResult> Register(UserRequestDTO user)
+        {
+            if (ModelState.IsValid)
+            {
 
+            }
+        }
     }
 }

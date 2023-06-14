@@ -7,6 +7,7 @@ namespace CommentService.Domain.Repositories
 {
     public class RoleRepositoryEF : IRoleRepository
     {
+        private readonly AppDbContext dbContext;
         public RoleRepositoryEF(AppDbContext dbContext)
         {
             this.dbContext = dbContext;
@@ -48,7 +49,6 @@ namespace CommentService.Domain.Repositories
         }
 
         private bool disposed = false;
-        private readonly AppDbContext dbContext;
 
         public virtual void Dispose(bool disposing)
         {
