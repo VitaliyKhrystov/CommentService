@@ -7,8 +7,9 @@ namespace CommentService.Domain.Repositories.Abstract
     {
         Task CreateRoleAsync(Role role);
         Task UpdateRoleAsync(Role role);
-        Task<Role> GetRoleByIdAsync(string roleId);
+        Task<Role> GetRoleByNameAsync(Roles role);
+        Task<Role> GetRoleByIdAsync(string id);
         Task<List<Role>> GetAllRolesAsync();
-        Task DeleteRoleAsync(string roleId);
+        Task DeleteRoleAsync(Roles role);
     }
 }

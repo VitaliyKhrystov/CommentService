@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
@@ -17,7 +18,7 @@ namespace CommentService.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    RoleName = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -33,7 +34,9 @@ namespace CommentService.Migrations
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Password = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     BirthYear = table.Column<int>(type: "int", nullable: false),
-                    RoleId = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                    RoleId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    RefreshToken = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    RefreshTokenExpiryTime = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -48,21 +51,21 @@ namespace CommentService.Migrations
 
             migrationBuilder.InsertData(
                 table: "Roles",
-                columns: new[] { "Id", "Name" },
+                columns: new[] { "Id", "RoleName" },
                 values: new object[,]
                 {
-                    { "29b2a03d-d405-4e7f-8a42-eef62cc38833", "Moderator" },
-                    { "2d51c19a-c724-4efc-855d-05362e5c6ea9", "Admin" },
-                    { "7310c28a-672a-4ba5-a999-450f84d21900", "User" }
+                    { "3996a1f1-bea0-41fd-8153-8ad42a2d918a", 1 },
+                    { "58eebf46-dacd-48cc-9922-1e927c2b63b2", 0 },
+                    { "f8a696b0-e0ad-4b6c-b939-521e961d770d", 2 }
                 });
 
             migrationBuilder.InsertData(
                 table: "Users",
-                columns: new[] { "Id", "BirthYear", "Email", "NickName", "Password", "RoleId" },
+                columns: new[] { "Id", "BirthYear", "Email", "NickName", "Password", "RefreshToken", "RefreshTokenExpiryTime", "RoleId" },
                 values: new object[,]
                 {
-                    { "02a78127-516f-4cce-9207-a6af6523b683", 1990, "admin@ukr.net", "Admin", "admin2023", "2d51c19a-c724-4efc-855d-05362e5c6ea9" },
-                    { "a8cbbe4d-5055-4796-80cb-bc322f97693c", 2000, "moderator@ukr.net", "Moderator", "moderator2023", "29b2a03d-d405-4e7f-8a42-eef62cc38833" }
+                    { "372adb8a-6c71-4310-a4e6-0afd3e702a2c", 2000, "moderator@ukr.net", "Moderator", "bW9kZXJhdG9yMjAyMw==", null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "3996a1f1-bea0-41fd-8153-8ad42a2d918a" },
+                    { "8f074fad-eaec-4a38-b1a6-fc55a0d63990", 1990, "admin@ukr.net", "Admin", "YWRtaW4yMDIz", null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "58eebf46-dacd-48cc-9922-1e927c2b63b2" }
                 });
 
             migrationBuilder.CreateIndex(

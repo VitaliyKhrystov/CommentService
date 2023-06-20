@@ -1,6 +1,10 @@
 using CommentService.Domain;
+using CommentService.Domain.Repositories;
+using CommentService.Domain.Repositories.Abstract;
 using CommentService.Services;
+using CommentService.Services.EncryptDecryptData;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 
@@ -11,13 +15,16 @@ namespace CommentService
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+            // Add services to the container.
             builder.Services.AddDbContext<AppDbContext>(s => s.UseSqlServer(builder.Configuration.GetSection("ConnectionString").Value));
-            builder.Configuration.Bind("JWTsetting", new JWTconfig());
+            builder.Services.AddTransient<JWTservice>();
+            builder.Configuration.Bind("JWTsettings", new JWTconfig());
 
             builder.Services.AddAuthentication().AddJwtBearer(option =>
             {
-                option.RequireHttpsMetadata = false;
-                option.TokenValidationParameters = new TokenValidationParameters() 
+                option.SaveToken = true;
+                option.RequireHttpsMetadata = true;
+                option.TokenValidationParameters = new TokenValidationParameters
                 {
                     ValidateIssuer = true,
                     ValidIssuer = JWTconfig.ValidIssuer,
@@ -31,11 +38,10 @@ namespace CommentService
                 };
             });
 
-            builder.Services.AddTransient<JWTservice>();
-            // Add services to the container.
-
             builder.Services.AddControllers();
-            builder.Services.AddAutoMapper(typeof(Program).Assembly);
+            builder.Services.AddScoped<IRoleRepository, RoleRepositoryEF>();
+            builder.Services.AddScoped<IUserRepository, UserRepositoryEF>();
+            builder.Services.AddScoped<IEncryptDecryptData, EncryptDecryptData>();
 
             var app = builder.Build();
 
@@ -43,9 +49,9 @@ namespace CommentService
 
             app.UseHttpsRedirection();
 
+            app.UseAuthentication();
             app.UseAuthorization();
-
-
+ 
             app.MapControllers();
 
             app.Run();

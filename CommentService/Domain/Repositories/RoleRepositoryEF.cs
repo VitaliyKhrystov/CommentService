@@ -19,9 +19,9 @@ namespace CommentService.Domain.Repositories
             await dbContext.SaveChangesAsync();
         }
 
-        public async Task DeleteRoleAsync(string roleId)
+        public async Task DeleteRoleAsync(Roles roleName)
         {
-            var role = await GetRoleByIdAsync(roleId);
+            var role = await GetRoleByNameAsync(roleName);
             if (role != null)
             {
                 dbContext.Roles.Remove(role);
@@ -34,11 +34,15 @@ namespace CommentService.Domain.Repositories
             return await dbContext.Roles.ToListAsync();
         }
 
-        public async Task<Role> GetRoleByIdAsync(string roleId)
+        public async Task<Role> GetRoleByNameAsync(Roles roleName)
         {
-            return await dbContext.Roles.FirstOrDefaultAsync(r => r.Id == roleId, default);
+            return await dbContext.Roles.FirstOrDefaultAsync(r => r.RoleName == roleName, default);
         }
 
+        public async Task<Role> GetRoleByIdAsync(string id)
+        {
+            return await dbContext.Roles.FirstOrDefaultAsync(r => r.Id == id, default);
+        }
         public async Task UpdateRoleAsync(Role role)
         {
             if (await dbContext.Roles.AnyAsync(r => r.Id == role.Id))

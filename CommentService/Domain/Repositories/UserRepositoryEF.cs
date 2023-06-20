@@ -19,9 +19,9 @@ namespace CommentService.Domain.Repositories
             await dbContext.SaveChangesAsync();
         }
 
-        public async Task DeleteUserAsync(string userId)
+        public async Task DeleteUserAsync(string nickName)
         {
-            var user = await GetUserByIdAsync(userId);
+            var user = await GetUserByNickNameAsync(nickName);
             if (user != null)
             {
                 dbContext.Users.Remove(user);
@@ -34,9 +34,9 @@ namespace CommentService.Domain.Repositories
             return await dbContext.Users.ToListAsync();
         }
 
-        public async Task<User> GetUserByIdAsync(string userId)
+        public async Task<User> GetUserByNickNameAsync(string nickName)
         {
-            return await dbContext.Users.FirstOrDefaultAsync(u => u.Id == userId, default);
+            return await dbContext.Users.FirstOrDefaultAsync(u => u.NickName == nickName, default);
         }
 
         public async Task UpdateUserAsync(User user)

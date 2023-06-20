@@ -7,8 +7,8 @@ namespace CommentService.Domain.Repositories.Abstract
     {
         Task CreateUserAsync(User user);
         Task UpdateUserAsync(User user);
-        Task<User> GetUserByIdAsync(string userId);
+        Task<User> GetUserByNickNameAsync(string nickName);
         Task<List<User>> GetAllUsersAsync();
-        Task DeleteUserAsync(string userId);
+        Task DeleteUserAsync(string nickName);
     }
 }
