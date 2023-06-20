@@ -135,6 +135,21 @@ namespace CommentService.Controllers
             }
         }
 
+        [Authorize]
+        [HttpPost ("logout")]
+        public async Task<IActionResult> LogOut()
+        {
+            var userName = this.HttpContext.User.FindFirstValue(ClaimTypes.Name);
+            var user = await userRepository.GetUserByNickNameAsync(userName);
+            if (user == null)
+                return BadRequest("Invalid user name");
+
+            user.RefreshToken = null;
+            user.RefreshTokenExpiryTime = default;
+            await userRepository.UpdateUserAsync(user);
+
+            return NoContent();
+        }
 
         [HttpPost]
         [Route("refresh-token")]
