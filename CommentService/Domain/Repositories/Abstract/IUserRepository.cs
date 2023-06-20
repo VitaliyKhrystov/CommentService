@@ -1,5 +1,4 @@
 ﻿using CommentService.Domain.Enteties;
-using CommentService.Models;
 
 namespace CommentService.Domain.Repositories.Abstract
 {

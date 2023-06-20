@@ -4,7 +4,6 @@ using CommentService.Domain.Repositories.Abstract;
 using CommentService.Services;
 using CommentService.Services.EncryptDecryptData;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 
@@ -41,6 +40,7 @@ namespace CommentService
             builder.Services.AddControllers();
             builder.Services.AddScoped<IRoleRepository, RoleRepositoryEF>();
             builder.Services.AddScoped<IUserRepository, UserRepositoryEF>();
+            builder.Services.AddScoped<ICommentRepository, CommentRepositoryEF>();
             builder.Services.AddScoped<IEncryptDecryptData, EncryptDecryptData>();
 
             var app = builder.Build();
