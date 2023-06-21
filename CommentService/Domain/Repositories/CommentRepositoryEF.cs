@@ -30,22 +30,16 @@ namespace CommentService.Domain.Repositories
 
         public async Task UpdateCommentAsync(Comment comment)
         {
-            if (await dbContext.Comments.AnyAsync(c => c.CommentId == comment.CommentId))
-            {
-                dbContext.Comments.Update(comment);
-                await dbContext.SaveChangesAsync();
-            }
+            dbContext.Comments.Update(comment);
+            await dbContext.SaveChangesAsync();
         }
 
-        public async Task DeleteUserAsync(string commentId)
+        public async Task DeleteUserAsync(Comment comment)
         {
-            var comment = await GetCommentByIdAsync(commentId);
-            if (comment != null)
-            {
-                dbContext.Comments.Remove(comment);
-                await dbContext.SaveChangesAsync();
-            }
+            dbContext.Comments.Remove(comment);
+            await dbContext.SaveChangesAsync();
         }
+
         private bool disposed = false;
 
         public virtual void Dispose(bool disposing)

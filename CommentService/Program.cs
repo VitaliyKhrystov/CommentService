@@ -42,6 +42,7 @@ namespace CommentService
             builder.Services.AddScoped<IUserRepository, UserRepositoryEF>();
             builder.Services.AddScoped<ICommentRepository, CommentRepositoryEF>();
             builder.Services.AddScoped<IEncryptDecryptData, EncryptDecryptData>();
+            builder.Services.AddScoped<ListErrors>();
 
             var app = builder.Build();
 

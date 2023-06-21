@@ -1,13 +1,10 @@
-﻿using Azure.Core;
-using CommentService.Domain.Enteties;
+﻿using CommentService.Domain.Enteties;
 using CommentService.Domain.Repositories.Abstract;
 using CommentService.Models;
 using CommentService.Services;
 using CommentService.Services.EncryptDecryptData;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
 using System.Security.Claims;
 
 namespace CommentService.Controllers
@@ -21,14 +18,16 @@ namespace CommentService.Controllers
         private readonly IUserRepository userRepository;
         private readonly IEncryptDecryptData encryptDecryptData;
         private readonly IRoleRepository roleRepository;
+        private readonly ListErrors listErrors;
 
-        public AccountController(ILogger<AccountController> logger, JWTservice jWTservice, IUserRepository userRepository, IEncryptDecryptData encryptDecryptData, IRoleRepository roleRepository)
+        public AccountController(ILogger<AccountController> logger, JWTservice jWTservice, IUserRepository userRepository, IEncryptDecryptData encryptDecryptData, IRoleRepository roleRepository, ListErrors listErrors)
         {
             this.logger = logger;
             this.jWTservice = jWTservice;
             this.userRepository = userRepository;
             this.encryptDecryptData = encryptDecryptData;
             this.roleRepository = roleRepository;
+            this.listErrors = listErrors;
         }
 
         [HttpPost ("register")]
@@ -69,15 +68,8 @@ namespace CommentService.Controllers
             }
             else
             {
-                var errors = new List<ModelError>();
-                foreach (var modelState in ModelState.Values)
-                {
-                    foreach (var error in modelState.Errors)
-                    {
-                        errors.Add(error);
-                        logger.LogError("ModelState error: \n" + error);
-                    }
-                }
+                var errors = listErrors.GetErrors(this);
+                errors.ForEach(error => { logger.LogError("ModelState error: \n" + error); });
                 return BadRequest(errors);
             }
         }
@@ -122,15 +114,8 @@ namespace CommentService.Controllers
             }
             else
             {
-                var errors = new List<ModelError>();
-                foreach (var modelState in ModelState.Values)
-                {
-                    foreach (var error in modelState.Errors)
-                    {
-                        errors.Add(error);
-                        logger.LogError("ModelState error: \n" + error);
-                    }
-                }
+                var errors = listErrors.GetErrors(this);
+                errors.ForEach(error => { logger.LogError("ModelState error: \n" + error); });
                 return BadRequest(errors);
             }
         }

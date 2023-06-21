@@ -1,9 +1,9 @@
 ﻿using CommentService.Domain.Enteties;
 using System.ComponentModel.DataAnnotations;
 
-namespace CommentService.Models
+namespace CommentService.Models.CommentModels
 {
-    public class CommentModel
+    public class CommentRequestModel
     {
         public string? TopicURL { get; set; }
         public string? ParrentId { get; set; }
