@@ -12,5 +12,11 @@ namespace CommentService.Domain.Enteties
         public DateTime UpdatedAt { get; set; }
         public List<Like>? Likes { get; set; }
         public List<DisLike>? DisLikes { get; set; }
+
+        public Comment()
+        {
+            Likes = new List<Like>();
+            DisLikes = new List<DisLike>();
+        }
     }
 }

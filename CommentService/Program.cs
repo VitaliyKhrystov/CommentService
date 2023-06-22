@@ -37,7 +37,10 @@ namespace CommentService
                 };
             });
 
-            builder.Services.AddControllers();
+            //.AddNewtonsoftJson - solution for: System.Text.Json.JsonException: A possible object cycle was detected which is not supported. This can either be due to a cycle or if the object depth is larger than the maximum allowed depth of 32
+            builder.Services.AddControllers().AddNewtonsoftJson(option => 
+                                              option.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
+
             builder.Services.AddScoped<IRoleRepository, RoleRepositoryEF>();
             builder.Services.AddScoped<IUserRepository, UserRepositoryEF>();
             builder.Services.AddScoped<ICommentRepository, CommentRepositoryEF>();

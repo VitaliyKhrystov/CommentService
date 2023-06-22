@@ -20,12 +20,13 @@ namespace CommentService.Domain.Repositories
 
         public async Task<IEnumerable<Comment>> GetAllCommentsAsync()
         {
-            return await dbContext.Comments.ToListAsync();
+            return await dbContext.Comments.Include(c => c.Likes).Include(c => c.DisLikes).ToListAsync();
         }
 
         public async Task<Comment> GetCommentByIdAsync(string commentId)
         {
-            return await dbContext.Comments.FirstOrDefaultAsync(c => c.CommentId == commentId, default);
+            var comments = await GetAllCommentsAsync();
+            return comments.FirstOrDefault(c => c.CommentId == commentId, default);
         }
 
         public async Task UpdateCommentAsync(Comment comment)

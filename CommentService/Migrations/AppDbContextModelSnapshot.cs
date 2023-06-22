@@ -53,11 +53,8 @@ namespace CommentService.Migrations
 
             modelBuilder.Entity("CommentService.Domain.Enteties.DisLike", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("CommentId")
                         .IsRequired()
@@ -79,11 +76,8 @@ namespace CommentService.Migrations
 
             modelBuilder.Entity("CommentService.Domain.Enteties.Like", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("CommentId")
                         .IsRequired()
@@ -118,17 +112,17 @@ namespace CommentService.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "fc1f56da-96e3-4067-9dc3-d4939c7db164",
+                            Id = "e551ea5e-700e-468a-86ce-a82c78dc40b2",
                             RoleName = 0
                         },
                         new
                         {
-                            Id = "2dca8c83-d82b-4db1-934f-28f564b68985",
+                            Id = "f6666ab0-945c-4d6e-a7f2-7ceabf167acf",
                             RoleName = 1
                         },
                         new
                         {
-                            Id = "72dc298d-fd3e-4435-907b-24cb9a4f97fd",
+                            Id = "3286c4d3-57d6-472c-a97f-cc9ff9dff5da",
                             RoleName = 2
                         });
                 });
@@ -172,23 +166,23 @@ namespace CommentService.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "cbaafc18-e3b8-48b9-9eef-b6e1c92d6ed5",
+                            Id = "8a192f1d-e700-4330-8eed-dd7da29a9ecd",
                             BirthYear = 1990,
                             Email = "admin@ukr.net",
                             NickName = "Admin",
                             Password = "YWRtaW4yMDIz",
                             RefreshTokenExpiryTime = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            RoleId = "fc1f56da-96e3-4067-9dc3-d4939c7db164"
+                            RoleId = "e551ea5e-700e-468a-86ce-a82c78dc40b2"
                         },
                         new
                         {
-                            Id = "581f334b-a57f-4758-8841-c280d9f3ad70",
+                            Id = "d099104a-79a4-406a-aa04-ba9155056edf",
                             BirthYear = 2000,
                             Email = "moderator@ukr.net",
                             NickName = "Moderator",
                             Password = "bW9kZXJhdG9yMjAyMw==",
                             RefreshTokenExpiryTime = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            RoleId = "2dca8c83-d82b-4db1-934f-28f564b68985"
+                            RoleId = "f6666ab0-945c-4d6e-a7f2-7ceabf167acf"
                         });
                 });
 

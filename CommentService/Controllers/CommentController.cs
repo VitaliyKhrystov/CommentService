@@ -1,10 +1,13 @@
-﻿using CommentService.Domain.Enteties;
+﻿using CommentService.Domain;
+using CommentService.Domain.Enteties;
 using CommentService.Domain.Repositories.Abstract;
 using CommentService.Models;
 using CommentService.Models.CommentModels;
 using CommentService.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 
 namespace CommentService.Controllers
 {
@@ -18,14 +21,16 @@ namespace CommentService.Controllers
         private readonly IUserRepository userRepository;
         private readonly IRoleRepository roleRepository;
         private readonly ListErrors listErrors;
+        private readonly AppDbContext appContext;
 
-        public CommentController(ICommentRepository commentRepository, ILogger<CommentController> logger, IUserRepository userRepository, IRoleRepository roleRepository, ListErrors listErrors)
+        public CommentController(ICommentRepository commentRepository, ILogger<CommentController> logger, IUserRepository userRepository, IRoleRepository roleRepository, ListErrors listErrors, AppDbContext appContext)
         {
             this.commentRepository = commentRepository;
             this.logger = logger;
             this.userRepository = userRepository;
             this.roleRepository = roleRepository;
             this.listErrors = listErrors;
+            this.appContext = appContext;
         }
 
         [HttpPost ("create")]
@@ -56,7 +61,7 @@ namespace CommentService.Controllers
             }
         }
 
-        [HttpPost ("update")]
+        [HttpPut ("update")]
         public async Task<IActionResult> UpdateAsync(UpdateCommentModel model)
         {
             if (ModelState.IsValid)
@@ -67,7 +72,7 @@ namespace CommentService.Controllers
                     var user = await userRepository.GetUserByIdAsync(model.UserId);
                     var role = await roleRepository.GetRoleByIdAsync(user.RoleId);
 
-                    if (comment == null || (user.Id != model.UserId ? (role.RoleName == Roles.Admin || role.RoleName == Roles.Moderator) : false))
+                    if (comment == null || (comment.UserId == model.UserId ? false : !(role.RoleName == Roles.Admin || role.RoleName == Roles.Moderator)))
                         return BadRequest();
 
                     comment.UpdatedAt = DateTime.Now;
@@ -95,7 +100,7 @@ namespace CommentService.Controllers
         {
             var comments = await commentRepository.GetAllCommentsAsync();
             var commentsRespose = comments.Select(c => c.ToDTO()).ToList();
-            var mainComments = commentsRespose.Where(c => c.ParrentId == null);
+            var mainComments = commentsRespose.Where(c => c.ParrentId == "");
             var subList = new List<CommentResponseModel>();
             var result = new List<CommentResponseModel>();
 
@@ -165,6 +170,78 @@ namespace CommentService.Controllers
                 DisLikes = c.DisLikes,
                 Replies = inner.Where(r => r.ParrentId == c.CommentId).Count() > 0 ? GetReplies(inner, c.CommentId) : null
             }).ToList();
+        }
+
+        [HttpPost ("setLike")]
+        public async Task<IActionResult> SetLikeAsync(ActionLikeDislikeModel model)
+        {
+            if(!ModelState.IsValid)
+                return BadRequest();
+
+            try
+            {
+                var comment = await commentRepository.GetCommentByIdAsync(model.CommentId);
+
+                if (comment == null || (comment.Likes.Any(u => u.UserId == model.UserId)
+                                    || comment.DisLikes.Any(u => u.UserId == model.UserId)))
+                    return BadRequest();
+
+                var like = new Like()
+                {
+                    Id = Guid.NewGuid().ToString(),
+                    CommentId = model.CommentId,
+                    Comment = comment,
+                    CreateAt = DateTime.Now,
+                    UserId = model.UserId
+                };
+
+                comment.Likes.Add(like);
+                await commentRepository.UpdateCommentAsync(comment);
+
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                logger.LogError("SetLike Error: " + ex.Message);
+                return BadRequest();
+            }
+            
+        }
+
+        [HttpPost("setDisLike")]
+        public async Task<IActionResult> SetDisLikeAsync(ActionLikeDislikeModel model)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest();
+
+            try
+            {
+                var comment = await commentRepository.GetCommentByIdAsync(model.CommentId);
+
+                if (comment == null || (comment.Likes.Any(u => u.UserId == model.UserId)
+                                    || comment.DisLikes.Any(u => u.UserId == model.UserId)))
+                    return BadRequest();
+
+                var disLike = new DisLike()
+                {
+                    Id = Guid.NewGuid().ToString(),
+                    CommentId = model.CommentId,
+                    Comment = comment,
+                    CreateAt = DateTime.Now,
+                    UserId = model.UserId
+                };
+
+                comment.DisLikes.Add(disLike);
+                await commentRepository.UpdateCommentAsync(comment);
+
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                logger.LogError("SetDisLike Error: " + ex.Message);
+                return BadRequest();
+            }
+
         }
     }
 }
