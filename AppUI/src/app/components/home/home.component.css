@@ -1,0 +1,19 @@
+.comment_text {
+  font-size: 16px;
+  padding: 0.5em;
+  width: 100%;
+  min-height: 10em;
+  color: #2F3E46;
+  border: 1px solid #CAD2C5;
+}
+
+.comment_text:focus {
+  outline: none;
+  border: 1px solid #CAD2C5;
+  box-shadow: 0 0 10px #719ECE;
+}
+
+.form {
+  background-color: #CAD2C5;
+  padding: 2em 1em 1em 1em;
+}

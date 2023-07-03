@@ -1,0 +1,38 @@
+<div class="container">
+  <form class="registerForm" #form="ngForm" (ngSubmit)="register()">
+    <div class="p-2">
+      <label for="nickName" class="form-label">Nickname</label>
+      <input type="text" class="form-control" id="nickName" name="nickName" [(ngModel)]="registerModel.nickName" required />
+      <div class="error_message" *ngIf="errors.includes('NickName') && !errors.includes('exception')">
+        {{ errors.substring( errors.indexOf("NickName")-1 , errors.indexOf("NickName") + errors.substring( errors.indexOf("NickName")-1 ).indexOf("]")) }}
+      </div>
+    </div>
+    <div class="p-2">
+      <label for="userEmail" class="form-label">Email address</label>
+      <input type="email" class="form-control" id="userEmail" name="email" [(ngModel)]="registerModel.email" />
+      <div class="error_message" *ngIf="errors.includes('Email') && !errors.includes('exception')">
+        {{ errors.substring(errors.indexOf("Email"), errors.indexOf("]")+1) }}</div>
+    </div>
+    <div class="p-2">
+      <label for="userPassword" class="form-label">Password</label>
+      <input type="password" class="form-control" id="userPassword" name="password" [(ngModel)]="registerModel.password" />
+      <div class="error_message" *ngIf="errors.includes('Password') && !errors.includes('exception')">
+        {{ errors.substring( errors.indexOf("Password")-1 , errors.indexOf("Password") + errors.substring( errors.indexOf("Password")-1 ).indexOf("]")) }}
+      </div>
+    </div>
+    <div class="p-2">
+      <label for="userBirthYear" class="form-label">Birthday Year</label>
+      <input type="number" class="form-control" id="userBirthYear" name="birthYear" [(ngModel)]="registerModel.birthYear" />
+      <div class="error_message" *ngIf="errors.includes('BirthYear') && !errors.includes('exception')">
+        {{ errors.substring( errors.indexOf("BirthYear")-1 , errors.indexOf("BirthYear") + errors.substring( errors.indexOf("BirthYear")-1 ).indexOf("]")) }}
+      </div>
+    </div>
+    <div class="exception_message" *ngIf="errors.includes('exception')">
+        {{ errors.substring( errors.indexOf("errorMessage")-1) }}
+    </div>
+    <div class="registerAction">
+      <button type="submit" class="btn registerSubmit">Register</button>
+      <a routerLink="/" class="registerHome">Home</a>
+    </div>
+  </form>
+</div>

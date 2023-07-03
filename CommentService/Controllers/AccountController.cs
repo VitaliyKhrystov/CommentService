@@ -6,6 +6,7 @@ using CommentService.Services.EncryptDecryptData;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace CommentService.Controllers
 {
@@ -69,7 +70,7 @@ namespace CommentService.Controllers
             else
             {
                 var errors = listErrors.GetErrors(this);
-                errors.ForEach(error => { logger.LogError("ModelState error: \n" + error); });
+                errors.AsParallel().ForAll(err => logger.LogError("ModelState error: \n" + $"{err.Key} => {err.Value}"));
                 return BadRequest(errors);
             }
         }
@@ -81,11 +82,11 @@ namespace CommentService.Controllers
             if (user == null)
             {
                 logger.LogError($"Not found: NickName - {model.NickName}");
-                return Unauthorized($"Not found: NickName - {model.NickName}.Please register!");
+                return Unauthorized($"Not found: NickName - {model.NickName}. Please register!");
             }
                 
             if (model.Password != encryptDecryptData.DecryptDataFromBase64(user.Password))
-                ModelState.AddModelError("", "Password do NOT match!");
+                ModelState.AddModelError("Password", "Password do NOT match!");
 
             if (ModelState.IsValid)
             {
@@ -115,7 +116,7 @@ namespace CommentService.Controllers
             else
             {
                 var errors = listErrors.GetErrors(this);
-                errors.ForEach(error => { logger.LogError("ModelState error: \n" + error); });
+                errors.AsParallel().ForAll(err => logger.LogError("ModelState error: \n" + $"{err.Key} => {err.Value}"));
                 return BadRequest(errors);
             }
         }
@@ -173,7 +174,6 @@ namespace CommentService.Controllers
             return Ok(response);
         }
 
-        [Authorize]
         [HttpGet ("ping")]
         public string Ping()
         {

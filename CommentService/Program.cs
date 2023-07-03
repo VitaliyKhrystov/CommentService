@@ -53,6 +53,8 @@ namespace CommentService
 
             app.UseHttpsRedirection();
 
+            app.UseCors(policy => policy.AllowAnyMethod().AllowAnyHeader().AllowAnyOrigin());
+
             app.UseAuthentication();
             app.UseAuthorization();
  

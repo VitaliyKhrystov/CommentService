@@ -1,0 +1,29 @@
+<div class="container">
+  <form class="loginForm" #form="ngForm" (ngSubmit)="login()">
+    <div class="p-2">
+      <label for="nickName" class="form-label">Nickname</label>
+      <input type="text" class="form-control" id="nickName" name="nickName" [(ngModel)]="loginModel.nickName" />
+      <div class="error_message" *ngIf="nickNameError">
+        {{ nickNameError }}
+      </div>
+      <div class="error_message" *ngIf="errors.NickName">
+        {{ errors.NickName[0] }}
+      </div>
+    </div>
+    <div class="p-2">
+      <label for="userPassword" class="form-label">Password</label>
+      <input type="password" class="form-control" id="userPassword" name="password" [(ngModel)]="loginModel.password" />
+      <div class="error_message" *ngIf="errors.Password">
+        {{ errors.Password[0] }}
+      </div>
+      <div class="error_message" *ngIf="passwordError">
+        {{ passwordError }}
+      </div>
+    </div>
+    <div class="loginAction">
+      <button type="submit" class="btn loginSubmit">Login</button>
+      <a routerLink="register" class="loginHome">Register</a>
+      <a routerLink="/" class="loginHome">Home</a>
+    </div>
+  </form>
+</div>

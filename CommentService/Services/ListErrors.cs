@@ -6,14 +6,18 @@ namespace CommentService.Services
 {
     public class ListErrors
     {
-        public List<ModelError> GetErrors(ControllerBase controller)
+        public Dictionary<string, string> GetErrors(ControllerBase controller)
         {
-            var errors = new List<ModelError>();
-            foreach (var modelState in controller.ModelState.Values)
+            var errors = new Dictionary<string, string>();
+
+            foreach (var key in controller.ModelState.Keys)
             {
-                foreach (var error in modelState.Errors)
+                foreach (var modelState in controller.ModelState.Values)
                 {
-                    errors.Add(error);
+                    foreach (var error in modelState.Errors)
+                    {
+                        errors[key] = error.ErrorMessage;
+                    }
                 }
             }
             return errors;

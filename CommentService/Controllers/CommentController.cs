@@ -56,7 +56,7 @@ namespace CommentService.Controllers
             else
             {
                 var errors = listErrors.GetErrors(this);
-                errors.ForEach(error => { logger.LogError("ModelState error: \n" + error); });
+                errors.AsParallel().ForAll(err => logger.LogError("ModelState error: \n" + $"{err.Key} => {err.Value}"));
                 return BadRequest(errors);
             }
         }
@@ -90,7 +90,7 @@ namespace CommentService.Controllers
             else
             {
                 var errors = listErrors.GetErrors(this);
-                errors.ForEach(error => { logger.LogError("ModelState error: \n" + error); });
+                errors.AsParallel().ForAll(err => logger.LogError("ModelState error: \n" + $"{err.Key} => {err.Value}"));
                 return BadRequest(errors);
             } 
         }
