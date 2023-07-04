@@ -6,11 +6,9 @@
       class="comment_text"
     ></textarea>
     <div class="action">
-      <a routerLink="register">Register</a>
-      <a routerLink="login">LogIn</a>
-      <button type="submit" class="btn btn-primary">Send</button>
-      <button>LogOut</button>
+      <a routerLink="login" class="login" *ngIf="!isAuthorized">LogIn</a>
+      <button type="submit" class="btn send" *ngIf="isAuthorized">Send</button>
+      <button type="submit" class="btn logout" (click)="logout()" *ngIf="isAuthorized">LogOut</button>
     </div>
   </form>
 </div>
-<app-login></app-login>

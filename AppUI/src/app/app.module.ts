@@ -1,14 +1,18 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
-import { FormsModule } from '@angular/forms'
+import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { appRouts } from './app.routs';
 
 import { AppComponent } from './app.component';
 import { RegisterComponent } from './components/register/register.component';
 import { HomeComponent } from './components/home/home.component';
 import { LoginComponent } from './components/login/login.component';
+import { AccountService } from 'src/Services/account.service';
+import { LocalStorageService } from 'src/Services/local-storage.service';
+import { AuthInterceptorService } from 'src/Services/auth-interceptor.service';
+
 
 @NgModule({
   declarations: [
@@ -19,11 +23,21 @@ import { LoginComponent } from './components/login/login.component';
   ],
   imports: [
     BrowserModule,
+    FormsModule,
+    ReactiveFormsModule,
     HttpClientModule,
-    RouterModule.forRoot(appRouts),
-    FormsModule
+    RouterModule.forRoot(appRouts)
   ],
-  providers: [],
+  providers: [
+    AccountService,
+    //The same{{provide:AccountService, useClass:AccountService}}
+    LocalStorageService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptorService,
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

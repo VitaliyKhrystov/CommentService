@@ -1,9 +1,10 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component } from '@angular/core';
 import { AccountService } from 'src/Services/account.service';
 import { LoginModel } from 'src/app/Models/LoginModel';
 import { Router } from '@angular/router';
 import { TokenModel } from 'src/app/Models/TokenModel';
 import { LoginModelErrors } from 'src/app/Models/LoginModelErrors';
+import { LocalStorageService } from 'src/Services/local-storage.service';
 
 @Component({
   selector: 'app-login',
@@ -11,19 +12,19 @@ import { LoginModelErrors } from 'src/app/Models/LoginModelErrors';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
+
   loginModel: LoginModel = {
-    nickName: "",
-    password: ""
+    nickName: '',
+    password: ''
   };
+
 
   tokenModel!: TokenModel;
   nickNameError: string = '';
-  passwordError: any;
+  passwordError: string = '';
   errors!: LoginModelErrors;
 
-  @Output() tokens:EventEmitter<TokenModel> = new EventEmitter();
-
-  constructor(private accountService: AccountService, private router:Router) { }
+  constructor(private accountService: AccountService, private router:Router, private localStorageService:LocalStorageService) { }
 
   login() {
     this.accountService.login(this.loginModel).
@@ -31,7 +32,7 @@ export class LoginComponent {
         next: (response) => {
           console.log(response);
           this.tokenModel = response;
-          this.tokens.emit(this.tokenModel);
+          this.localStorageService.saveData("tokens", this.tokenModel);
           this.router.navigate(["/"]);
         },
         error: (err) => {

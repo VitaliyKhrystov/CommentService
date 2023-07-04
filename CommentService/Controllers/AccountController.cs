@@ -173,7 +173,7 @@ namespace CommentService.Controllers
 
             return Ok(response);
         }
-
+        [Authorize]
         [HttpGet ("ping")]
         public string Ping()
         {
