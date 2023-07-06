@@ -10,6 +10,7 @@ import { RegisterModel } from 'src/app/Models/RegisterModel';
   styleUrls: ['./register.component.css']
 })
 export class RegisterComponent {
+  
   registerModel: RegisterModel =
     {
       nickName: "",
@@ -19,7 +20,7 @@ export class RegisterComponent {
       roleName:2
     }
 
-  errors!: string;
+  errors: string = '';
 
   constructor(private accountService: AccountService, private router:Router) { }
 
@@ -37,11 +38,4 @@ export class RegisterComponent {
            }
       })
   }
-}
-
-interface JSONData{
-  Email: string[],
-  NickName:string[],
-  Password:string[],
-  BirthYear:string[]
 }

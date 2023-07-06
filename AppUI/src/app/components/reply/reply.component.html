@@ -1,0 +1,15 @@
+<div *ngFor="let comment of com" class="container reply-container">
+    <p>{{comment.commentId}}</p>
+    <!-- <p>{{comment.parrentId}}</p> -->
+    <!-- <p>{{comment.userId}}</p> -->
+    <p style="color: blueviolet;">{{comment.commentText}}</p>
+    <!-- <p>{{comment.createdAt}}</p>
+    <p>{{comment.updatedAt}}</p>
+    <p>{{comment.likes}}</p>
+    <p>{{comment.disLikes}}</p>
+    <p>{{comment.replies}}</p> -->
+
+    <div *ngIf="comment.replies" class="replies">
+     <app-reply [com]="comment.replies"></app-reply>
+    </div>
+</div>

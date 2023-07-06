@@ -11,8 +11,15 @@ export class AuthInterceptorService implements HttpInterceptor {
 
   constructor(private accountService: AccountService, private localStorage: LocalStorageService) { }
 
-  tokenFromLocalStorage!: TokenModel;
-  newTokens!: TokenModel;
+  tokenFromLocalStorage: TokenModel = {
+    accessToken: '',
+    refreshToken:''
+  };
+  newTokens: TokenModel = {
+    accessToken: '',
+    refreshToken:''
+  };
+
   baseApiUrl: string = environment.apiURL;
 
   excludedURLs: string[] = [
@@ -30,7 +37,8 @@ export class AuthInterceptorService implements HttpInterceptor {
           this.localStorage.saveData("tokens", this.newTokens);
         },
         error: err => {
-          console.error(err);
+          this.localStorage.removeData("tokens");
+          console.log(err);
         }
       });
       req = req.clone({

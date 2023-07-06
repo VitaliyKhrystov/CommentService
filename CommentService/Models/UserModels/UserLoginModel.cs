@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace CommentService.Models
+namespace CommentService.Models.UserModels
 {
     public class UserLoginModel
     {

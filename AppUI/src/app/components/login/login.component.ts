@@ -22,7 +22,10 @@ export class LoginComponent {
   tokenModel!: TokenModel;
   nickNameError: string = '';
   passwordError: string = '';
-  errors!: LoginModelErrors;
+  errors: LoginModelErrors = {
+    NickName: [],
+    Password: []
+  }
 
   constructor(private accountService: AccountService, private router:Router, private localStorageService:LocalStorageService) { }
 

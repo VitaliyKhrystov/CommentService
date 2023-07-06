@@ -12,6 +12,8 @@ import { LoginComponent } from './components/login/login.component';
 import { AccountService } from 'src/Services/account.service';
 import { LocalStorageService } from 'src/Services/local-storage.service';
 import { AuthInterceptorService } from 'src/Services/auth-interceptor.service';
+import { CommentComponent } from './components/comment/comment.component';
+import { ReplyComponent } from './components/reply/reply.component';
 
 
 @NgModule({
@@ -19,7 +21,9 @@ import { AuthInterceptorService } from 'src/Services/auth-interceptor.service';
     AppComponent,
     RegisterComponent,
     HomeComponent,
-    LoginComponent
+    LoginComponent,
+    CommentComponent,
+    ReplyComponent
   ],
   imports: [
     BrowserModule,

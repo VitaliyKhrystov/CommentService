@@ -1,4 +1,4 @@
 export class LoginModelErrors{
-  "NickName": string[];
-  "Password": string[];
+  NickName!: string[];
+  Password!: string[];
 }

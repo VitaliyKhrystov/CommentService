@@ -6,8 +6,7 @@ using CommentService.Models.CommentModels;
 using CommentService.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Newtonsoft.Json;
+
 
 namespace CommentService.Controllers
 {
@@ -95,6 +94,7 @@ namespace CommentService.Controllers
             } 
         }
 
+        [AllowAnonymous]
         [HttpGet ("getAllComments")]
         public async Task<List<CommentResponseModel>> GetAllCommentsAsync()
         {
@@ -127,6 +127,7 @@ namespace CommentService.Controllers
             return result;
         }
 
+        [AllowAnonymous]
         [HttpGet("getComment")]
         public async Task<CommentResponseModel> GetCommentAsync(string commentId)
         {
