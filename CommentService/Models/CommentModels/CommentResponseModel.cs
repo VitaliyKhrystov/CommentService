@@ -7,6 +7,7 @@ namespace CommentService.Models.CommentModels
         public string CommentId { get; set; }
         public string? ParrentId { get; set; }
         public string UserId { get; set; }
+        public string UserNickName { get; set; }
         public string? CommentText { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }

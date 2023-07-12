@@ -24,6 +24,7 @@ namespace CommentService.Models.CommentModels
                 CommentId = comment.CommentId,
                 ParrentId = comment.ParrentId,
                 UserId = comment.UserId,
+                UserNickName= comment.UserNickName,
                 CommentText = comment.CommentText,
                 CreatedAt = comment.CreatedAt,
                 Likes = comment.Likes,

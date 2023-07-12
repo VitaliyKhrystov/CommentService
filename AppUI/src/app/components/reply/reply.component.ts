@@ -6,7 +6,5 @@ import { Component, Input } from '@angular/core';
   styleUrls: ['./reply.component.css']
 })
 export class ReplyComponent {
-  @Input() com: any;
-  @Input() com2: any;
-
+  @Input() comments: any;
 }

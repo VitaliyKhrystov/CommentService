@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, Subject, tap } from 'rxjs';
-import { CommentModelResponse, CommenttModelRequest } from 'src/app/Models/CommentModel';
+import { CommenttModelRequest } from 'src/app/Models/CommentModel';
 import { environment } from 'src/environments/environment';
 
 const baseApiURL = environment.apiURL;
@@ -13,7 +13,7 @@ export class CommentService {
 
   constructor(private http: HttpClient) { }
 
-  private refreshData = new Subject<void>();
+  private refreshData = new Subject<boolean>();
 
   get RefreshData() {
     return this.refreshData;
@@ -22,7 +22,7 @@ export class CommentService {
   createComment(comment: CommenttModelRequest) {
     return this.http.post(baseApiURL + "/api/Comment/create", comment, { responseType: 'text' }).pipe(
       tap(() => {
-        this.RefreshData.next();
+        this.RefreshData.next(true);
       })
     )
   }

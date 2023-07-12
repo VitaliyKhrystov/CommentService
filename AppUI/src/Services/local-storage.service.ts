@@ -1,24 +1,20 @@
 import { Injectable } from '@angular/core';
+import { Subject, tap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class LocalStorageService {
-  [x: string]: any;
 
-  constructor() { }
+  constructor() {
+    this.IsAuthozised.next(this.getData('tokens'));
+   }
 
-  IsAuthozised(key:string):boolean {
-    if (this.getData(key) != null) {
-      return true;
-    } else {
-      return false;
-    }
-  }
+  IsAuthozised: Subject<boolean> = new Subject<boolean>();
 
   saveData(key: string, value: object): void{
-    this.removeData(key);
-    return localStorage.setItem(key, JSON.stringify(value).toString());
+    this.IsAuthozised.next(true);
+    localStorage.setItem(key, JSON.stringify(value).toString());
   }
 
   getData(key: string): any{
@@ -27,6 +23,7 @@ export class LocalStorageService {
 
   removeData(key: string) {
     localStorage.removeItem(key);
+    this.IsAuthozised.next(false);
   }
 
   clearData() {

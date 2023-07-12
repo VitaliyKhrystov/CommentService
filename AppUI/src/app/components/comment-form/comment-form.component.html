@@ -1,6 +1,7 @@
 <div class="">
   <form class="form" #form="ngForm" (ngSubmit)="sendMessage()">
-    <textarea id="textarea" placeholder="Your comment" class="comment_text" name="comment" [(ngModel)]="comment" [disabled]="!isAuthorized" ></textarea>
+    <textarea id="textarea" placeholder="Your comment" class="comment_text" name="commentText" [(ngModel)]="commentRequest.commentText" [disabled]="!isAuthorized" ></textarea>
+
     <div class="action">
       <a routerLink="login" class="login" *ngIf="!isAuthorized">LogIn</a>
       <button type="submit" class="btn send" *ngIf="isAuthorized">Send</button>

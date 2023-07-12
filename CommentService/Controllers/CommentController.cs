@@ -43,6 +43,8 @@ namespace CommentService.Controllers
                 var comment = model.FromDTO();
                 try
                 {
+                    var user = await userRepository.GetUserByIdAsync(model.UserId);
+                    comment.UserNickName = user.NickName;
                     await commentRepository.CreateCommentAsync(comment);
                     return Ok("Comment created successfully");
                 }
@@ -113,6 +115,7 @@ namespace CommentService.Controllers
                     CommentId = c.CommentId,
                     ParrentId = c.ParrentId,
                     UserId = c.UserId,
+                    UserNickName = c.UserNickName,
                     CommentText = c.CommentText,
                     CreatedAt = c.CreatedAt,
                     UpdatedAt = c.UpdatedAt,
@@ -128,8 +131,8 @@ namespace CommentService.Controllers
         }
 
         [AllowAnonymous]
-        [HttpGet("getComment")]
-        public async Task<CommentResponseModel> GetCommentAsync(string commentId)
+        [HttpGet("getCommentById")]
+        public async Task<CommentResponseModel> GetCommentByIdAsync(string commentId)
         {
             var comment = await commentRepository.GetCommentByIdAsync(commentId);
             return comment.ToDTO();
@@ -164,6 +167,7 @@ namespace CommentService.Controllers
                 CommentId = c.CommentId,
                 ParrentId = parrentId,
                 UserId = c.UserId,
+                UserNickName = c.UserNickName,
                 CommentText = c.CommentText,
                 CreatedAt = c.CreatedAt,
                 UpdatedAt = c.UpdatedAt,

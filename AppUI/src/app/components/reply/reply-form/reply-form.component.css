@@ -1,0 +1,91 @@
+.reply-container {
+  display: flex;
+  flex-direction: column;
+  margin-top: 2em;
+}
+
+.reply-container-header{
+  display: flex;
+  flex-direction: column;
+  background-color: #cad2c5;
+}
+
+.reply-container-header .nickname-action{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.reply-container-header .action{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.reply-container-header .action .like{
+  margin-right: 2em;
+}
+.replies {
+  margin-left: 1em;
+}
+
+.replybtn {
+  width: 4em;
+  background-color: #84A98C;
+  color: white;
+}
+
+.replybtn:hover{
+  background-color: #52796F;
+}
+
+.show-reply{
+  color: #52796f;
+}
+
+.dates{
+  font-size: 0.75em;
+}
+
+.reply-form{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.reply-message{
+  width: 80%;
+  height: 100%;
+  margin: 0.75em 0;
+  padding: 0.5em;
+}
+
+.reply-btn-actions{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 20%;
+}
+
+.reply-img{
+  width: 1.5em;
+  border-radius: 50%;
+}
+
+.img-update:hover {
+  background-color: #cad2c5;
+}
+
+.img-cancel:hover {
+  background-color: #84a98c;
+}
+
+.img-edit:hover {
+  background-color: #cad2c5;
+}
+
+.img-delete:hover {
+  background-color: #84a98c;
+}

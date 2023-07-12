@@ -18,7 +18,6 @@ export class AccountService {
   baseApiUrl: string = environment.apiURL;
 
   getPing():Observable<string> {
-
     return this.http.get(this.baseApiUrl + "/api/Account/ping", {responseType:'text'});
   }
 

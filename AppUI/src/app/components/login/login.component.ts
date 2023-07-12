@@ -33,9 +33,9 @@ export class LoginComponent {
     this.accountService.login(this.loginModel).
       subscribe({
         next: (response) => {
-          console.log(response);
           this.tokenModel = response;
           this.localStorageService.saveData("tokens", this.tokenModel);
+          console.log(response);
           this.router.navigate(["/"]);
         },
         error: (err) => {

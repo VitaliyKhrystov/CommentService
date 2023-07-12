@@ -7,23 +7,25 @@ import { appRouts } from './app.routs';
 
 import { AppComponent } from './app.component';
 import { RegisterComponent } from './components/register/register.component';
-import { HomeComponent } from './components/home/home.component';
+import { CommentFormComponent } from './components/comment-form/comment-form.component';
 import { LoginComponent } from './components/login/login.component';
 import { AccountService } from 'src/Services/account.service';
 import { LocalStorageService } from 'src/Services/local-storage.service';
 import { AuthInterceptorService } from 'src/Services/auth-interceptor.service';
 import { CommentComponent } from './components/comment/comment.component';
 import { ReplyComponent } from './components/reply/reply.component';
+import { ReplyFormComponent } from './components/reply/reply-form/reply-form.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     RegisterComponent,
-    HomeComponent,
+    CommentFormComponent,
     LoginComponent,
     CommentComponent,
-    ReplyComponent
+    ReplyComponent,
+    ReplyFormComponent
   ],
   imports: [
     BrowserModule,
@@ -33,14 +35,14 @@ import { ReplyComponent } from './components/reply/reply.component';
     RouterModule.forRoot(appRouts)
   ],
   providers: [
-    AccountService,
-    //The same{{provide:AccountService, useClass:AccountService}}
-    LocalStorageService,
-    {
+        {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptorService,
       multi: true
-    }
+    },
+    AccountService,
+    //The same{{provide:AccountService, useClass:AccountService}}
+    LocalStorageService
   ],
   bootstrap: [AppComponent]
 })

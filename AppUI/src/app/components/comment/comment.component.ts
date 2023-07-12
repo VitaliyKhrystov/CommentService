@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommentService } from 'src/Services/comment.service';
 import { JwtService } from 'src/Services/jwt.service';
 import { CommentModelResponse, CommenttModelRequest } from 'src/app/Models/CommentModel';
+import { CommentMessageParrentId } from 'src/app/Models/CommentMessageParrentId';
 
 @Component({
   selector: 'app-comment',
@@ -10,40 +11,14 @@ import { CommentModelResponse, CommenttModelRequest } from 'src/app/Models/Comme
 })
 export class CommentComponent implements OnInit{
 
-    commentRequest: CommenttModelRequest = {
-    commentText: '',
-    parrentId: '',
-    topicURL: 'http://test.com',
-    userId: ''
-  }
-
   comments: CommentModelResponse[] = [];
 
   constructor(private commentService: CommentService, private jwtService: JwtService) { }
 
   ngOnInit(): void {
     this.getAllComments();
-    this.commentService.RefreshData.subscribe(res => {
-      this.getAllComments();
-    })
-  }
-
-  ngDoCheck() {
-
-  }
-
-  createComment(e: any) {
-    this.commentRequest.commentText = e;
-    this.commentRequest.userId = this.jwtService.decodeJWT().nameid;
-    this.commentService.createComment(this.commentRequest).subscribe({
-      next: res => {
-        // this.getAllComments()
-        console.log(res);
-      },
-      error: err => {
-        console.error(err);
-      }
-    });
+    this.commentService.RefreshData.subscribe(res =>
+    { this.getAllComments(); });
   }
 
   getAllComments() {

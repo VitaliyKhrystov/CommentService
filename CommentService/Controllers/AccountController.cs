@@ -1,6 +1,7 @@
 ﻿using CommentService.Domain.Enteties;
 using CommentService.Domain.Repositories.Abstract;
 using CommentService.Models;
+using CommentService.Models.UserModels;
 using CommentService.Services;
 using CommentService.Services.EncryptDecryptData;
 using Microsoft.AspNetCore.Authorization;
@@ -145,19 +146,22 @@ namespace CommentService.Controllers
 
             var principal = jWTservice.GetPrincipalFromExpiredToken(tokenModel.AccessToken);
             if (principal == null)
-                return BadRequest("Invalid access token or refresh token");
+                return BadRequest("The principal is empty");
 
-            var userRole = principal.Claims.First(x => x.Type == ClaimTypes.Role).Value;
-            var userEmail = principal.Claims.First(x => x.Type == ClaimTypes.Email).Value;
-            var userId = principal.Claims.First(x => x.Type == ClaimTypes.NameIdentifier).Value;
             var userName = principal.Identity.Name;
-
             var user = await userRepository.GetUserByNickNameAsync(userName);
 
             if (user == null || user.RefreshToken != tokenModel.RefreshToken || user.RefreshTokenExpiryTime <= DateTime.Now)
-                return BadRequest("Invalid access token or refresh token");
+                {
+                    user.RefreshToken = default;
+                    user.RefreshTokenExpiryTime = default;
+                    await userRepository.UpdateUserAsync(user);
+                    return BadRequest("Invalid access token or refresh token");
+                }
 
-            var newAccessToken = jWTservice.CreateJWToken(userId, userName, userEmail, userRole);
+            var userRole = principal.Claims.First(x => x.Type == ClaimTypes.Role).Value;
+            var newAccessToken = jWTservice.CreateJWToken(user.Id, userName, user.Email, userRole.ToString());
+
             var newRefreshToken = jWTservice.GenerateRefreshToken();
 
             user.RefreshToken = newRefreshToken;
@@ -172,6 +176,7 @@ namespace CommentService.Controllers
 
             return Ok(response);
         }
+
         [Authorize]
         [HttpGet ("ping")]
         public string Ping()

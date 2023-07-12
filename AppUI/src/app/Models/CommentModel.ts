@@ -9,6 +9,7 @@ export class CommentModelResponse{
   commentId!: string;
   parrentId!: string;
   userId!: string;
+  userNickName!: string;
   commentText!: string;
   createdAt!: Date;
   updatedAt!: Date;
