@@ -23,9 +23,23 @@
   justify-content: space-between;
 }
 
-.reply-container-header .action .like{
-  margin-right: 2em;
+.button-like,
+.button-dislike{
+  margin-right: 1em;
+  background-color: inherit;
+  border: 0;
 }
+
+.button-img-like{
+  width: 1.5em;
+  filter: invert(100%);
+}
+
+.button-img-dislike{
+  width: 1.25em;
+  filter: invert(100%);
+}
+
 .replies {
   margin-left: 1em;
 }
@@ -60,18 +74,47 @@
   height: 100%;
   margin: 0.75em 0;
   padding: 0.5em;
+  border-radius: 5px;
+  background-color: inherit;
 }
 
 .reply-btn-actions{
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  width: 20%;
+  width: 25%;
 }
 
 .reply-img{
   width: 1.5em;
   border-radius: 50%;
+}
+
+.button-edit,
+.button-delete,
+.button-update,
+.button-cancel,
+.button-delete-yes,
+.button-delete-no {
+  background-color: #cad2c5;
+  margin-left: 0.3em;
+}
+
+.button-update,
+.button-delete-yes{
+  background-color: #b5e48c;
+}
+
+.button-cancel,
+.button-delete-no {
+  background-color: #fcd5ce;
+}
+
+.button-edit:disabled,
+.button-delete:disabled{
+  border: 0;
+  background-color: inherit;
+  margin-left: 0.3em;
 }
 
 .img-update:hover {

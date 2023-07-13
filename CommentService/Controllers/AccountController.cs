@@ -152,12 +152,16 @@ namespace CommentService.Controllers
             var user = await userRepository.GetUserByNickNameAsync(userName);
 
             if (user == null || user.RefreshToken != tokenModel.RefreshToken || user.RefreshTokenExpiryTime <= DateTime.Now)
+            {
+                if (user != null)
                 {
                     user.RefreshToken = default;
                     user.RefreshTokenExpiryTime = default;
                     await userRepository.UpdateUserAsync(user);
-                    return BadRequest("Invalid access token or refresh token");
                 }
+
+                return BadRequest("Invalid access token or refresh token");
+            }
 
             var userRole = principal.Claims.First(x => x.Type == ClaimTypes.Role).Value;
             var newAccessToken = jWTservice.CreateJWToken(user.Id, userName, user.Email, userRole.ToString());

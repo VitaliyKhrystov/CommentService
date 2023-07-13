@@ -17,6 +17,9 @@ export class JwtService {
 
   decodeJWT(): any {
     this.tokens = JSON.parse(this.localStorage.getData('tokens'));
-    return jwt_decode(this.tokens.accessToken);
+    if (this.tokens) {
+      return jwt_decode(this.tokens.accessToken);
+    }
+    return null;
   }
 }

@@ -32,8 +32,8 @@ namespace CommentService.Services
             {
                 var claims = new List<Claim>
                 {
-                    new Claim(ClaimsIdentity.DefaultNameClaimType, userNickName),
-                    new Claim(ClaimsIdentity.DefaultRoleClaimType, userRole),
+                    new Claim(ClaimTypes.Name, userNickName),
+                    new Claim(ClaimTypes.Role, userRole),
                     new Claim(JwtRegisteredClaimNames.Email, email),
                     new Claim(JwtRegisteredClaimNames.NameId, userId)
                 };

@@ -3,22 +3,24 @@
         <div class="nickname-action">
           <p>{{comment.userNickName}}</p>
           <div class="action">
-            <p class="like"> <span>Likes: </span>{{comment.likes.length}}</p>
-            <p class="dislike"> <span>DisLikes: </span>{{comment.disLikes.length}}</p>
+            <button class="button-like"> <img class="button-img-like" src="assets/like.svg" alt=""> {{comment.likes.length}}</button>
+            <button class="button-dislike"> <img class="button-img-dislike" src="assets/dislike.svg" alt=""> {{comment.disLikes.length}}</button>
           </div>
         </div>
       </div>
         <div class="dates">
           <p class="createdAt"> <span>CreatedAt: </span>{{comment.createdAt | date:'MMM/d/yyyy, H:mm'}}</p>
-          <p class="updatedAt" *ngIf="(comment.updatedAt | date:'yyyy') == '0001'"> <span>UpdatedAt: </span>{{comment.updatedAt | date:'MMM/d/yyyy, H:mm'}}</p>
+          <p class="updatedAt" *ngIf="(comment.updatedAt | date:'yyyy') != '0001'"> <span>UpdatedAt: </span>{{comment.updatedAt | date:'MMM/d/yyyy, H:mm'}}</p>
         </div>
         <form class="reply-form">
-          <textarea class="reply-message" type="text" value="{{comment.commentText}}" [attr.rows]="getRows(comment.commentText)" [disabled]="!isEdit"></textarea>
+          <textarea class="reply-message" type="text" name="commentText"[(ngModel)]="comment.commentText" [attr.rows]="getRows(comment.commentText)" [disabled]="!isEdit"></textarea>
           <div class="reply-btn-actions">
-            <button class="btn button-update" type="submit" *ngIf="isEdit" (click)="isEdit=!isEdit"><img class="reply-img img-update" src="assets/updated.png" alt="update"></button>
+            <button class="btn button-update" type="submit" *ngIf="isEdit" (click)="update()"><img class="reply-img img-update" src="assets/updated.png" alt="update"></button>
             <button class="btn button-cancel" *ngIf="isEdit" (click)="isEdit=!isEdit"><img class="reply-img img-cancel" src="assets/cancel.png" alt="cancel"></button>
-            <button class="btn button-edit" *ngIf="!isEdit" (click)="edit()"><img class="reply-img img-edit" src="assets/edit.png" alt="edit"></button>
-            <button class="btn button-delete" *ngIf="!isEdit"><img class="reply-img img-delete" src="assets/trash-bin.png" alt="delete" ></button>
+            <button class="btn button-edit" *ngIf="!isEdit && isDelete" (click)="isEdit=!isEdit" [disabled]="!isCanEditOrDelete()"><img class="reply-img img-edit" src="assets/edit.png" alt="edit"></button>
+            <button class="btn button-delete" *ngIf="!isEdit && isDelete" (click)="isDelete = !isDelete" [disabled]="!isCanEditOrDelete()"><img class="reply-img img-delete" src="assets/trash-bin.png" alt="delete" ></button>
+            <button class="btn button-delete-yes" *ngIf="!isDelete" (click)="delete('yes')"><img class="reply-img img-delete" src="assets/confirm.png" alt="delete" ></button>
+            <button class="btn button-delete-no" *ngIf="!isDelete" (click)="delete('no')"><img class="reply-img img-delete" src="assets/cancel.png" alt="delete" ></button>
           </div>
         </form>
       <div>

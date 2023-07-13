@@ -138,7 +138,7 @@ namespace CommentService.Controllers
             return comment.ToDTO();
         }
 
-        [HttpDelete ("delete")]
+        [HttpDelete ("delete/{commentId}")]
         public async Task<IActionResult> DeleteCommentAsync(string commentId)
         {
             var comment = await commentRepository.GetCommentByIdAsync (commentId);
