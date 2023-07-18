@@ -3,6 +3,7 @@ import { CommentComponent } from '../../comment/comment.component';
 import { CommentService } from 'src/Services/comment.service';
 import { UpdateCommentModel } from 'src/app/Models/UpdateCommentModel';
 import { JwtService } from 'src/Services/jwt.service';
+import { DisLike, Like } from 'src/app/Models/CommentModel';
 
 @Component({
   selector: 'app-reply-form',
@@ -15,19 +16,50 @@ export class ReplyFormComponent implements OnInit {
 
   ngOnInit(): void {
     this.currentMessage = this.comment.commentText;
+    this.token = this.jwtService.decodeJWT();
+    if (this.token) {
+      this.userId = this.token["nameid"];
+      this.role = this.token["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"];
+      if (this.comment.disLikes.find((dislike: DisLike) => { return dislike.userId === this.userId }) != null) {
+        this.imgDislikeInvert = false;
+      } else {
+         this.imgDislikeInvert = true;
+      }
+      if (this.comment.likes.find((like: Like) => { return like.userId === this.userId }) != null) {
+        this.imgLikeInvert = false;
+      } else {
+         this.imgLikeInvert = true;
+      }
+    }
   }
 
   @Input() comment: any;
 
+  token:any;
+  userId!: string;
+  role!: string;
   isReply: boolean = false;
   isHidden: boolean = false;
   isEdit: boolean = false;
   isDelete: boolean = true;
+  imgLikeInvert!: boolean;
+  imgDislikeInvert!: boolean;
   row: number = 1;
   currentMessage!: string;
+
   updateComment: UpdateCommentModel = {
     commentId: '',
     commentText: '',
+    userId: ''
+  }
+
+  like: Like = {
+    commentId: '',
+    userId: ''
+  }
+
+   disLike: DisLike = {
+    commentId: '',
     userId: ''
   }
 
@@ -58,7 +90,7 @@ export class ReplyFormComponent implements OnInit {
     if (choice === 'yes') {
       this.commentService.deleteComment(this.comment.commentId).subscribe({
       next: res => {
-        console.log();
+        console.log(res);
       },
       error: err => {
         console.log(err);
@@ -69,20 +101,82 @@ export class ReplyFormComponent implements OnInit {
   }
 
   isCanEditOrDelete(): boolean {
-    let token = this.jwtService.decodeJWT();
-    if (token) {
-      let userID = token["nameid"];
-      let role = token["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"];
-      if (userID) {
-        if (this.comment.userId == userID || role == 'Admin') {
-          return true;
-        }
+    if (this.userId) {
+      if (this.comment.userId == this.userId || this.role == 'Admin' || this.role == 'Moderator') {
+        return true;
       }
    }
     return false;
   }
 
-  setLike() {
+  isCanLikeDisLike(): boolean{
+    if (this.userId != this.comment.userId) {
+      return true;
+    }
+    return false;
+  }
 
+  setLike() {
+    if (this.userId && this.comment.commentId)
+    {
+      this.like.userId = this.userId;
+      this.like.commentId = this.comment.commentId;
+      if (!(this.comment.likes.find((like:any) => { return like.userId === this.userId }) != null ||
+        this.comment.disLikes.find((dislike:any) => {return dislike.userId === this.userId}) !=null
+      ))
+      {
+        this.commentService.setLike(this.like).subscribe({
+          next: res => {
+            this.imgLikeInvert = true;
+          },
+          error: err => {
+            console.log(err);
+          }
+        });
+      }
+      else if (this.comment.likes.find((like: any) => { return like.userId === this.userId }) != null)
+      {
+        this.commentService.deleteLike(this.like).subscribe({
+          next: res => {
+            this.imgLikeInvert = false;
+          },
+          error: err => {
+            console.log(err);
+          }
+        })
+      }
+    }
+  }
+
+  setDisLike() {
+    if (this.userId && this.comment.commentId)
+    {
+      this.disLike.userId = this.userId;
+      this.disLike.commentId = this.comment.commentId;
+      if (!(this.comment.likes.find((like:any) => { return like.userId === this.userId }) != null ||
+        this.comment.disLikes.find((dislike:any) => {return dislike.userId === this.userId}) !=null
+      ))
+      {
+        this.commentService.setDisLike(this.disLike).subscribe({
+          next: res => {
+            this.imgDislikeInvert = true;
+          },
+          error: err => {
+            console.log(err);
+          }
+        });
+      }
+      else if (this.comment.disLikes.find((dislike: any) => { return dislike.userId === this.userId }) != null)
+      {
+        this.commentService.deleteDisLike(this.disLike).subscribe({
+          next: res => {
+            this.imgDislikeInvert = false;
+          },
+          error: err => {
+            console.log(err);
+          }
+        })
+      }
+    }
   }
 }

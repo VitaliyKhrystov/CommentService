@@ -20,13 +20,12 @@ namespace CommentService.Domain.Repositories
 
         public async Task<IEnumerable<Comment>> GetAllCommentsAsync()
         {
-            return await dbContext.Comments.Include(c => c.Likes).Include(c => c.DisLikes).ToListAsync();
+            return await dbContext.Comments.AsNoTracking().Include(c => c.Likes).Include(c => c.DisLikes).ToListAsync();
         }
 
         public async Task<Comment> GetCommentByIdAsync(string commentId)
         {
-            var comments = await GetAllCommentsAsync();
-            return comments.FirstOrDefault(c => c.CommentId == commentId, default);
+            return await dbContext.Comments.FirstOrDefaultAsync(c => c.CommentId == commentId, default);
         }
 
         public async Task UpdateCommentAsync(Comment comment)
@@ -35,9 +34,15 @@ namespace CommentService.Domain.Repositories
             await dbContext.SaveChangesAsync();
         }
 
-        public async Task DeleteUserAsync(Comment comment)
+        public async Task DeleteCommentAsync(Comment comment)
         {
             dbContext.Comments.Remove(comment);
+            await dbContext.SaveChangesAsync();
+        }
+
+        public async Task DeleteCommentsAsync(IEnumerable<Comment> comments)
+        {
+            dbContext.Comments.RemoveRange(comments);
             await dbContext.SaveChangesAsync();
         }
 

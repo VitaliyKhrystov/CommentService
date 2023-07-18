@@ -21,10 +21,28 @@ namespace CommentService.Models.CommentModels
         {
             return new CommentResponseModel
             {
+                TopicURL = comment.TopicURL,
                 CommentId = comment.CommentId,
                 ParrentId = comment.ParrentId,
                 UserId = comment.UserId,
                 UserNickName= comment.UserNickName,
+                CommentText = comment.CommentText,
+                CreatedAt = comment.CreatedAt,
+                Likes = comment.Likes,
+                DisLikes = comment.DisLikes,
+                UpdatedAt = comment.UpdatedAt
+            };
+        }
+
+        public static Comment FromDTO(this CommentResponseModel  comment)
+        {
+            return new Comment
+            {
+                TopicURL = comment.TopicURL,
+                CommentId = comment.CommentId,
+                ParrentId = comment.ParrentId,
+                UserId = comment.UserId,
+                UserNickName = comment.UserNickName,
                 CommentText = comment.CommentText,
                 CreatedAt = comment.CreatedAt,
                 Likes = comment.Likes,

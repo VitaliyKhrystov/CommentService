@@ -75,7 +75,7 @@ namespace CommentService.Migrations
 
                     b.HasIndex("CommentId");
 
-                    b.ToTable("DisLike");
+                    b.ToTable("DisLikes");
                 });
 
             modelBuilder.Entity("CommentService.Domain.Enteties.Like", b =>
@@ -98,7 +98,7 @@ namespace CommentService.Migrations
 
                     b.HasIndex("CommentId");
 
-                    b.ToTable("Like");
+                    b.ToTable("Likes");
                 });
 
             modelBuilder.Entity("CommentService.Domain.Enteties.Role", b =>
@@ -116,17 +116,17 @@ namespace CommentService.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "ac92c48d-cbf2-4ec3-998b-b4b5c5c936b5",
+                            Id = "e1c5d066-b65d-493e-89e8-ba18f156f7c0",
                             RoleName = 0
                         },
                         new
                         {
-                            Id = "e0bf70c0-9425-458f-92a3-0d938317a471",
+                            Id = "b46e9936-0776-4c02-9624-04baadbed764",
                             RoleName = 1
                         },
                         new
                         {
-                            Id = "0c4690b5-5a01-4364-a818-963f2d9f004c",
+                            Id = "4c31b247-4d02-4974-9fbe-fb9e1c151878",
                             RoleName = 2
                         });
                 });
@@ -170,23 +170,23 @@ namespace CommentService.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "4b2939ac-e7a9-4eb5-b2b8-b784f9036393",
+                            Id = "52c90699-ee7d-49a7-bb83-287e3f2b8d04",
                             BirthYear = 1990,
                             Email = "admin@ukr.net",
                             NickName = "Admin",
                             Password = "YWRtaW4yMDIz",
                             RefreshTokenExpiryTime = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            RoleId = "ac92c48d-cbf2-4ec3-998b-b4b5c5c936b5"
+                            RoleId = "e1c5d066-b65d-493e-89e8-ba18f156f7c0"
                         },
                         new
                         {
-                            Id = "7bdac8b1-3f85-480c-a619-0c24b03671a3",
+                            Id = "64c0799b-46b6-4e83-b4e3-965a7be6935a",
                             BirthYear = 2000,
                             Email = "moderator@ukr.net",
                             NickName = "Moderator",
                             Password = "bW9kZXJhdG9yMjAyMw==",
                             RefreshTokenExpiryTime = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            RoleId = "e0bf70c0-9425-458f-92a3-0d938317a471"
+                            RoleId = "b46e9936-0776-4c02-9624-04baadbed764"
                         });
                 });
 

@@ -21,6 +21,7 @@ namespace CommentService.Migrations
                     TopicURL = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ParrentId = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     UserId = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    UserNickName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CommentText = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
@@ -43,7 +44,7 @@ namespace CommentService.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "DisLike",
+                name: "DisLikes",
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
@@ -53,9 +54,9 @@ namespace CommentService.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_DisLike", x => x.Id);
+                    table.PrimaryKey("PK_DisLikes", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_DisLike_Comments_CommentId",
+                        name: "FK_DisLikes_Comments_CommentId",
                         column: x => x.CommentId,
                         principalTable: "Comments",
                         principalColumn: "CommentId",
@@ -63,7 +64,7 @@ namespace CommentService.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Like",
+                name: "Likes",
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
@@ -73,9 +74,9 @@ namespace CommentService.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Like", x => x.Id);
+                    table.PrimaryKey("PK_Likes", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Like_Comments_CommentId",
+                        name: "FK_Likes_Comments_CommentId",
                         column: x => x.CommentId,
                         principalTable: "Comments",
                         principalColumn: "CommentId",
@@ -111,9 +112,9 @@ namespace CommentService.Migrations
                 columns: new[] { "Id", "RoleName" },
                 values: new object[,]
                 {
-                    { "3286c4d3-57d6-472c-a97f-cc9ff9dff5da", 2 },
-                    { "e551ea5e-700e-468a-86ce-a82c78dc40b2", 0 },
-                    { "f6666ab0-945c-4d6e-a7f2-7ceabf167acf", 1 }
+                    { "4c31b247-4d02-4974-9fbe-fb9e1c151878", 2 },
+                    { "b46e9936-0776-4c02-9624-04baadbed764", 1 },
+                    { "e1c5d066-b65d-493e-89e8-ba18f156f7c0", 0 }
                 });
 
             migrationBuilder.InsertData(
@@ -121,18 +122,18 @@ namespace CommentService.Migrations
                 columns: new[] { "Id", "BirthYear", "Email", "NickName", "Password", "RefreshToken", "RefreshTokenExpiryTime", "RoleId" },
                 values: new object[,]
                 {
-                    { "8a192f1d-e700-4330-8eed-dd7da29a9ecd", 1990, "admin@ukr.net", "Admin", "YWRtaW4yMDIz", null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "e551ea5e-700e-468a-86ce-a82c78dc40b2" },
-                    { "d099104a-79a4-406a-aa04-ba9155056edf", 2000, "moderator@ukr.net", "Moderator", "bW9kZXJhdG9yMjAyMw==", null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "f6666ab0-945c-4d6e-a7f2-7ceabf167acf" }
+                    { "52c90699-ee7d-49a7-bb83-287e3f2b8d04", 1990, "admin@ukr.net", "Admin", "YWRtaW4yMDIz", null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "e1c5d066-b65d-493e-89e8-ba18f156f7c0" },
+                    { "64c0799b-46b6-4e83-b4e3-965a7be6935a", 2000, "moderator@ukr.net", "Moderator", "bW9kZXJhdG9yMjAyMw==", null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "b46e9936-0776-4c02-9624-04baadbed764" }
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_DisLike_CommentId",
-                table: "DisLike",
+                name: "IX_DisLikes_CommentId",
+                table: "DisLikes",
                 column: "CommentId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Like_CommentId",
-                table: "Like",
+                name: "IX_Likes_CommentId",
+                table: "Likes",
                 column: "CommentId");
 
             migrationBuilder.CreateIndex(
@@ -145,10 +146,10 @@ namespace CommentService.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "DisLike");
+                name: "DisLikes");
 
             migrationBuilder.DropTable(
-                name: "Like");
+                name: "Likes");
 
             migrationBuilder.DropTable(
                 name: "Users");

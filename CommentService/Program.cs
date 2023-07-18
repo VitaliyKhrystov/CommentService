@@ -4,6 +4,7 @@ using CommentService.Domain.Repositories.Abstract;
 using CommentService.Services;
 using CommentService.Services.EncryptDecryptData;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 
@@ -15,7 +16,10 @@ namespace CommentService
         {
             var builder = WebApplication.CreateBuilder(args);
             // Add services to the container.
-            builder.Services.AddDbContext<AppDbContext>(s => s.UseSqlServer(builder.Configuration.GetSection("ConnectionString").Value));
+            builder.Services.AddDbContext<AppDbContext>(option => { 
+                option.UseSqlServer(builder.Configuration.GetSection("ConnectionString").Value);
+                //option.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
+            });
             builder.Services.AddTransient<JWTservice>();
             builder.Configuration.Bind("JWTsettings", new JWTconfig());
 
@@ -43,8 +47,9 @@ namespace CommentService
 
             builder.Services.AddScoped<IRoleRepository, RoleRepositoryEF>();
             builder.Services.AddScoped<IUserRepository, UserRepositoryEF>();
-            builder.Services.AddScoped<ICommentRepository, CommentRepositoryEF>();
+            builder.Services.AddTransient<ICommentRepository, CommentRepositoryEF>();
             builder.Services.AddScoped<IEncryptDecryptData, EncryptDecryptData>();
+            builder.Services.AddScoped<IActionRepository, ActionRepositoryEF>();
             builder.Services.AddScoped<ListErrors>();
 
             var app = builder.Build();

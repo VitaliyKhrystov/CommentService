@@ -6,6 +6,7 @@ export class CommenttModelRequest{
 }
 
 export class CommentModelResponse{
+  TopicURL!: string;
   commentId!: string;
   parrentId!: string;
   userId!: string;
@@ -19,10 +20,8 @@ export class CommentModelResponse{
 }
 
 export class Action{
-  id!: string;
   commentId!: string;
   userId!: string;
-  createdAt!: Date;
 }
 export class Like extends Action{}
 

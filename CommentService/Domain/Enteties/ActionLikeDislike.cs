@@ -1,4 +1,6 @@
-﻿namespace CommentService.Domain.Enteties
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace CommentService.Domain.Enteties
 {
     public class ActionLikeDislike
     {

@@ -3,8 +3,8 @@
         <div class="nickname-action">
           <p>{{comment.userNickName}}</p>
           <div class="action">
-            <button class="button-like"> <img class="button-img-like" src="assets/like.svg" alt=""> {{comment.likes.length}}</button>
-            <button class="button-dislike"> <img class="button-img-dislike" src="assets/dislike.svg" alt=""> {{comment.disLikes.length}}</button>
+            <button class="button-like" [disabled]="!isCanLikeDisLike()" (click)="setLike()"> <img class="button-img-like" [ngClass]="{'button-img-dislike-filter-invert': imgLikeInvert}" src="assets/like.svg" alt=""> {{comment.likes.length}}</button>
+            <button class="button-dislike" [disabled]="!isCanLikeDisLike()" (click)="setDisLike()"> <img class="button-img-dislike" [ngClass]="{'button-img-dislike-filter-invert': imgDislikeInvert}" src="assets/dislike.svg" alt=""> {{comment.disLikes.length}}</button>
           </div>
         </div>
       </div>

@@ -8,6 +8,7 @@ namespace CommentService.Domain.Repositories.Abstract
         Task UpdateCommentAsync(Comment comment);
         Task<Comment> GetCommentByIdAsync(string commentId);
         Task<IEnumerable<Comment>> GetAllCommentsAsync();
-        Task DeleteUserAsync(Comment comment);
+        Task DeleteCommentAsync(Comment comment);
+        Task DeleteCommentsAsync(IEnumerable<Comment> comments);
     }
 }

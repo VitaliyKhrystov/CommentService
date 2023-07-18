@@ -4,6 +4,7 @@ namespace CommentService.Models.CommentModels
 {
     public class CommentResponseModel
     {
+        public string TopicURL { get; set; }
         public string CommentId { get; set; }
         public string? ParrentId { get; set; }
         public string UserId { get; set; }

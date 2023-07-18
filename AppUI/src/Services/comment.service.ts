@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, Subject, catchError, tap } from 'rxjs';
-import { CommenttModelRequest } from 'src/app/Models/CommentModel';
+import { CommenttModelRequest, DisLike, Like } from 'src/app/Models/CommentModel';
 import { UpdateCommentModel } from 'src/app/Models/UpdateCommentModel';
 import { environment } from 'src/environments/environment';
 
@@ -48,4 +48,35 @@ export class CommentService {
     );
   }
 
+  setLike(like: Like) {
+    return this.http.post(baseApiURL + "/api/Comment/setLike", like).pipe(
+      tap(() => {
+        this.RefreshData.next(true);
+      })
+    );;
+  }
+
+  deleteLike(like: Like) {
+    return this.http.post(baseApiURL + "/api/Comment/deleteLike", like).pipe(
+      tap(() => {
+        this.RefreshData.next(true);
+      })
+    );
+    }
+
+  setDisLike(disLike: DisLike) {
+    return this.http.post(baseApiURL + "/api/Comment/setDisLike", disLike).pipe(
+      tap(() => {
+        this.RefreshData.next(true);
+      })
+    );
+   }
+
+  deleteDisLike(disLike: DisLike) {
+    return this.http.post(baseApiURL + "/api/Comment/deleteDisLike", disLike).pipe(
+      tap(() => {
+        this.RefreshData.next(true);
+      })
+    );
+  }
 }
