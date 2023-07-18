@@ -5,6 +5,8 @@ import { CommentFormComponent } from './components/comment-form/comment-form.com
 import { LoginComponent } from './components/login/login.component';
 import { CommentComponent } from './components/comment/comment.component';
 import { ReplyComponent } from './components/reply/reply.component';
+import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
+import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
 
 export const appRouts: Routes = [
   { path: '', component: CommentComponent },
@@ -12,7 +14,11 @@ export const appRouts: Routes = [
   { path: 'register', component: RegisterComponent },
   { path: 'login', component: LoginComponent },
   { path: 'reply', component: ReplyComponent },
-  { path: 'reply-form', component: ReplyComponent }
+  { path: 'reply-form', component: ReplyComponent },
+  { path: 'forgot-password', component: ForgotPasswordComponent },
+  { path: 'reset-password', component: ResetPasswordComponent }
+
+
 
   // {path:'**', component:NotFoundComponent}
 ]

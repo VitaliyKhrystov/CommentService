@@ -15,6 +15,8 @@ import { AuthInterceptorService } from 'src/Services/auth-interceptor.service';
 import { CommentComponent } from './components/comment/comment.component';
 import { ReplyComponent } from './components/reply/reply.component';
 import { ReplyFormComponent } from './components/reply/reply-form/reply-form.component';
+import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
+import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
 
 
 @NgModule({
@@ -25,7 +27,9 @@ import { ReplyFormComponent } from './components/reply/reply-form/reply-form.com
     LoginComponent,
     CommentComponent,
     ReplyComponent,
-    ReplyFormComponent
+    ReplyFormComponent,
+    ForgotPasswordComponent,
+    ResetPasswordComponent
   ],
   imports: [
     BrowserModule,

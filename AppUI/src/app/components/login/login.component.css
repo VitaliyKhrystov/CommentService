@@ -33,3 +33,10 @@
   color: red;
   width: auto;
 }
+
+.forgot-password{
+  text-decoration: none;
+  font-size: 0.75em;
+  color: #2f3e46;
+  margin: 8px;
+}
