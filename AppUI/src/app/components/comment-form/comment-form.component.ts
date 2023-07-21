@@ -3,9 +3,8 @@ import { AccountService } from 'src/Services/account.service';
 import { CommentService } from 'src/Services/comment.service';
 import { JwtService } from 'src/Services/jwt.service';
 import { LocalStorageService } from 'src/Services/local-storage.service';
-import { CommentMessageParrentId } from 'src/app/Models/CommentMessageParrentId';
 import { CommenttModelRequest } from 'src/app/Models/CommentModel';
-import { TokenModel } from 'src/app/Models/TokenModel';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-comment-form',
@@ -27,11 +26,11 @@ export class CommentFormComponent implements OnInit{
 
   @Input() parrentId: string = '';
   isAuthorized!: boolean;
-
+  topicUrl = environment.topicURL;
     commentRequest: CommenttModelRequest = {
       commentText: '',
       parrentId: '',
-      topicURL: 'http://test.com',
+      topicURL: this.topicUrl,
       userId: ''
   }
 

@@ -22,6 +22,7 @@ namespace CommentService
             });
             builder.Services.AddTransient<JWTservice>();
             builder.Configuration.Bind("JWTsettings", new JWTconfig());
+            builder.Configuration.Bind("EmailClient", new EmailClient());
 
             builder.Services.AddAuthentication().AddJwtBearer(option =>
             {
@@ -51,6 +52,7 @@ namespace CommentService
             builder.Services.AddScoped<IEncryptDecryptData, EncryptDecryptData>();
             builder.Services.AddScoped<IActionRepository, ActionRepositoryEF>();
             builder.Services.AddScoped<ListErrors>();
+            builder.Services.AddScoped<EmailSender>();
 
             var app = builder.Build();
 

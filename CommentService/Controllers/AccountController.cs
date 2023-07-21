@@ -1,6 +1,8 @@
-﻿using CommentService.Domain.Enteties;
+﻿using Azure;
+using CommentService.Domain.Enteties;
 using CommentService.Domain.Repositories.Abstract;
 using CommentService.Models;
+using CommentService.Models.ForgotPassport;
 using CommentService.Models.UserModels;
 using CommentService.Services;
 using CommentService.Services.EncryptDecryptData;
@@ -20,8 +22,10 @@ namespace CommentService.Controllers
         private readonly IEncryptDecryptData encryptDecryptData;
         private readonly IRoleRepository roleRepository;
         private readonly ListErrors listErrors;
+        private readonly EmailSender emailSender;
+        private static int confirmationNumber;
 
-        public AccountController(ILogger<AccountController> logger, JWTservice jWTservice, IUserRepository userRepository, IEncryptDecryptData encryptDecryptData, IRoleRepository roleRepository, ListErrors listErrors)
+        public AccountController(ILogger<AccountController> logger, JWTservice jWTservice, IUserRepository userRepository, IEncryptDecryptData encryptDecryptData, IRoleRepository roleRepository, ListErrors listErrors, EmailSender emailSender)
         {
             this.logger = logger;
             this.jWTservice = jWTservice;
@@ -29,6 +33,7 @@ namespace CommentService.Controllers
             this.encryptDecryptData = encryptDecryptData;
             this.roleRepository = roleRepository;
             this.listErrors = listErrors;
+            this.emailSender = emailSender;
         }
 
         [HttpPost ("register")]
@@ -181,11 +186,57 @@ namespace CommentService.Controllers
             return Ok(response);
         }
 
-        [Authorize]
-        [HttpGet ("ping")]
-        public string Ping()
+        [HttpPost ("forgotPassword")]
+        public async Task<IActionResult> ForgotPasswordAsync(ForgotPasswordRequest model)
         {
-            return "Pong";
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    var user = await userRepository.GetUserByEmailAsync(model.Email);
+                    if (user != null)
+                    {
+                        confirmationNumber = new Random().Next(1000, 1000000);
+                        emailSender.Sender("confirmation email", $"Confirmation number: {confirmationNumber}", model.Email);
+                        var response = new ForgotPasswordResponse()
+                        {
+                            UserId = user.Id,
+                            ConfirmationNumber = confirmationNumber
+                        };
+
+                        return Ok(response);
+                    };
+                }
+                catch (Exception ex)
+                {
+                    logger.LogError("ForgotPassword Error:" + ex.Message);
+                    return BadRequest(ex.Message);
+                }
+            }
+            return BadRequest("User can't be found!");
+        }
+
+        [HttpPost("resetPassword")]
+        public async Task<IActionResult> ResetPasswordAsync(ResetPassword model)
+        {
+            if (ModelState.IsValid && confirmationNumber == model.ConfirmationNumber)
+            {
+                try
+                {
+                    var user = await userRepository.GetUserByIdAsync(model.UserId);
+                    if(user != null)
+                    {
+                        user.Password = encryptDecryptData.EncryptDataToBase64(model.Password);
+                        await userRepository.UpdateUserAsync(user);
+                        return Ok();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    logger.LogError ("ResetPassword Error: " + ex.Message);
+                }
+            }
+            return BadRequest("Incorrect confirmation data!");
         }
     }
 }

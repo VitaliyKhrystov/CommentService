@@ -1,7 +1,7 @@
     <div class="reply-container">
       <div class="reply-container-header">
         <div class="nickname-action">
-          <p>{{comment.userNickName}}</p>
+          <p class="user-nickname">{{comment.userNickName}}</p>
           <div class="action">
             <button class="button-like" [disabled]="!isCanLikeDisLike()" (click)="setLike()"> <img class="button-img-like" [ngClass]="{'button-img-dislike-filter-invert': imgLikeInvert}" src="assets/like.svg" alt=""> {{comment.likes.length}}</button>
             <button class="button-dislike" [disabled]="!isCanLikeDisLike()" (click)="setDisLike()"> <img class="button-img-dislike" [ngClass]="{'button-img-dislike-filter-invert': imgDislikeInvert}" src="assets/dislike.svg" alt=""> {{comment.disLikes.length}}</button>
@@ -13,10 +13,10 @@
           <p class="updatedAt" *ngIf="(comment.updatedAt | date:'yyyy') != '0001'"> <span>UpdatedAt: </span>{{comment.updatedAt | date:'MMM/d/yyyy, H:mm'}}</p>
         </div>
         <form class="reply-form">
-          <textarea class="reply-message" type="text" name="commentText"[(ngModel)]="comment.commentText" [attr.rows]="getRows(comment.commentText)" [disabled]="!isEdit"></textarea>
+          <textarea class="reply-message" type="text" name="currentMessage"[(ngModel)]="currentMessage" [attr.rows]="getRows(currentMessage)" [disabled]="!isEdit"></textarea>
           <div class="reply-btn-actions">
             <button class="btn button-update" type="submit" *ngIf="isEdit" (click)="update()"><img class="reply-img img-update" src="assets/updated.png" alt="update"></button>
-            <button class="btn button-cancel" *ngIf="isEdit" (click)="isEdit=!isEdit"><img class="reply-img img-cancel" src="assets/cancel.png" alt="cancel"></button>
+            <button class="btn button-cancel" *ngIf="isEdit" (click)="cancel()"><img class="reply-img img-cancel" src="assets/cancel.png" alt="cancel"></button>
             <button class="btn button-edit" *ngIf="!isEdit && isDelete" (click)="isEdit=!isEdit" [disabled]="!isCanEditOrDelete()"><img class="reply-img img-edit" src="assets/edit.png" alt="edit"></button>
             <button class="btn button-delete" *ngIf="!isEdit && isDelete" (click)="isDelete = !isDelete" [disabled]="!isCanEditOrDelete()"><img class="reply-img img-delete" src="assets/trash-bin.png" alt="delete" ></button>
             <button class="btn button-delete-yes" *ngIf="!isDelete" (click)="delete('yes')"><img class="reply-img img-delete" src="assets/confirm.png" alt="delete" ></button>
@@ -24,8 +24,8 @@
           </div>
         </form>
       <div>
-        <button class="btn replybtn" (click)="isReply = !isReply">Reply</button>
-        <button class="btn show-reply" *ngIf="comment.replies && comment.replies.length != 0" (click)="isHidden = !isHidden">Show {{comment.replies.length}} Replies</button>
+        <button class="btn replybtn" (click)="canReply()">Reply</button>
+        <button class="btn show-reply" *ngIf="comment.replies && comment.replies.length != 0" (click)="showReply()">Show {{comment.replies.length}} Replies</button>
       </div>
       <app-comment-form *ngIf="isReply" parrentId={{comment.commentId}}></app-comment-form>
       <div *ngIf="isHidden" class="replies">

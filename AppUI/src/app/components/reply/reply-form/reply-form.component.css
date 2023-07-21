@@ -17,6 +17,10 @@
   align-items: center;
 }
 
+.user-nickname{
+  margin-left: 1em;
+}
+
 .reply-container-header .action{
   display: flex;
   flex-direction: row;

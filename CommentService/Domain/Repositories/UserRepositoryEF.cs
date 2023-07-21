@@ -39,6 +39,11 @@ namespace CommentService.Domain.Repositories
             return await dbContext.Users.FirstOrDefaultAsync(u => u.NickName == nickName, default);
         }
 
+        public async Task<User> GetUserByEmailAsync(string email)
+        {
+            return await dbContext.Users.FirstOrDefaultAsync(u => u.Email == email, default);
+        }
+
         public async Task<User> GetUserByIdAsync(string id)
         {
             return await dbContext.Users.FirstOrDefaultAsync(u => u.Id == id, default);

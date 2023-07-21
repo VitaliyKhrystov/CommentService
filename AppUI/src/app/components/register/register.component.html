@@ -1,5 +1,6 @@
 <div class="container">
   <form class="registerForm" #form="ngForm" (ngSubmit)="register()">
+    <h1>Registration</h1>
     <div class="p-2">
       <label for="nickName" class="form-label">Nickname</label>
       <input type="text" class="form-control" id="nickName" name="nickName" [(ngModel)]="registerModel.nickName" required />

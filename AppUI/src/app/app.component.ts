@@ -12,17 +12,4 @@ export class AppComponent {
 
   constructor(private accountClient:AccountService) { }
 
-  getPingFromWebApi() {
-       this.accountClient.getPing()
-         .subscribe({
-           next: (response) => {
-             console.log(response);
-             this.test = response;
-           },
-           error: (err) => {
-             console.error(err);
-           }
-           }
-    );
-  }
 }

@@ -5,6 +5,8 @@ import { RegisterModel } from 'src/app/Models/RegisterModel';
 import { LoginModel } from 'src/app/Models/LoginModel';
 import { TokenModel } from 'src/app/Models/TokenModel';
 import { environment } from 'src/environments/environment';
+import { ResetPassword } from 'src/app/Models/ResetPassword';
+import { ForgotPassword } from 'src/app/Models/ForgotPassword';
 
 const BaseApi = "https://localhost:7200/api";
 
@@ -16,10 +18,6 @@ export class AccountService {
   constructor(private http: HttpClient) { }
 
   baseApiUrl: string = environment.apiURL;
-
-  getPing():Observable<string> {
-    return this.http.get(this.baseApiUrl + "/api/Account/ping", {responseType:'text'});
-  }
 
   register(registerModel: RegisterModel){
     return this.http.post(this.baseApiUrl + "/api/Account/register", registerModel, {responseType:'text'})
@@ -35,5 +33,16 @@ export class AccountService {
 
   logout() {
     return this.http.post(this.baseApiUrl + "/api/Account/logout", "");
+  }
+
+  forgotPassword(email: string): Observable<ForgotPassword> {
+    let response = {
+      "email":email
+    }
+    return this.http.post<ForgotPassword>(this.baseApiUrl + "/api/Account/forgotPassword", response, {responseType:'json'});
+   }
+
+   resetPassword(model:ResetPassword) {
+    return this.http.post(this.baseApiUrl + "/api/Account/resetPassword", model, {responseType:'text'});
   }
 }

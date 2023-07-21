@@ -1,5 +1,12 @@
 .loginForm {
   background-color: #CAD2C5;
+  margin-top: 1em;
+}
+
+h1 {
+  text-align: center;
+  padding: 0.5em 0;
+  color: #354f52;
 }
 
 .loginAction {

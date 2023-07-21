@@ -45,7 +45,7 @@ export class ReplyFormComponent implements OnInit {
   imgLikeInvert!: boolean;
   imgDislikeInvert!: boolean;
   row: number = 1;
-  currentMessage!: string;
+  currentMessage: string = '';
 
   updateComment: UpdateCommentModel = {
     commentId: '',
@@ -63,6 +63,16 @@ export class ReplyFormComponent implements OnInit {
     userId: ''
   }
 
+  canReply() {
+    this.isReply = !this.isReply;
+    this.isHidden = false;
+  }
+
+  showReply() {
+    this.isHidden = !this.isHidden;
+    this.isReply = false;
+  }
+
   getRows(text: string): number {
     let num = text.length / 35;
     return this.row = num < this.row ?  this.row : Math.ceil(num);
@@ -72,7 +82,7 @@ export class ReplyFormComponent implements OnInit {
     this.isEdit = true;
     this.updateComment.commentId = this.comment.commentId;
     this.updateComment.userId = this.comment.userId;
-    this.updateComment.commentText = this.comment.commentText;
+    this.updateComment.commentText = this.currentMessage;
     console.log(this.updateComment);
     this.commentService.updateComment(this.updateComment).subscribe({
       next: res => {
@@ -80,10 +90,15 @@ export class ReplyFormComponent implements OnInit {
       },
       error: err => {
         console.log(err);
-        this.comment.commentText = this.currentMessage;
+        // this.comment.commentText = this.currentMessage;
       }
     });
     this.isEdit = false;
+  }
+
+  cancel() {
+    this.isEdit = !this.isEdit;
+    this.currentMessage = this.comment.commentText;
   }
 
   delete(choice: string) {
