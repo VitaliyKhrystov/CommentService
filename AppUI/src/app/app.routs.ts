@@ -7,10 +7,11 @@ import { CommentComponent } from './components/comment/comment.component';
 import { ReplyComponent } from './components/reply/reply.component';
 import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
+import { authGuard } from 'src/Services/auth.guard';
 
 export const appRouts: Routes = [
-  { path: '', component: CommentComponent },
-  { path: 'comment-form', component: CommentFormComponent },
+  { path: '', component: CommentComponent  },
+  { path: 'comment-form', component: CommentFormComponent, canActivate:[authGuard] },
   { path: 'register', component: RegisterComponent },
   { path: 'login', component: LoginComponent },
   { path: 'reply', component: ReplyComponent },

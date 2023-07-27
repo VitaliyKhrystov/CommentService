@@ -1,5 +1,4 @@
-﻿using Azure;
-using CommentService.Domain.Enteties;
+﻿using CommentService.Domain.Enteties;
 using CommentService.Domain.Repositories.Abstract;
 using CommentService.Models;
 using CommentService.Models.ForgotPassport;
@@ -60,7 +59,8 @@ namespace CommentService.Controllers
                         Email = model.Email,
                         Password = userPassword,
                         Role = role,
-                        RoleId = role.Id
+                        RoleId = role.Id,
+                        BirthYear= model.BirthYear
                     };
                     await userRepository.CreateUserAsync(newUser);
 
@@ -158,12 +158,12 @@ namespace CommentService.Controllers
 
             if (user == null || user.RefreshToken != tokenModel.RefreshToken || user.RefreshTokenExpiryTime <= DateTime.Now)
             {
-                if (user != null)
-                {
-                    user.RefreshToken = default;
-                    user.RefreshTokenExpiryTime = default;
-                    await userRepository.UpdateUserAsync(user);
-                }
+                //if (user != null)
+                //{
+                //    user.RefreshToken = default;
+                //    user.RefreshTokenExpiryTime = default;
+                //    await userRepository.UpdateUserAsync(user);
+                //}
 
                 return BadRequest("Invalid access token or refresh token");
             }

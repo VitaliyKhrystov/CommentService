@@ -1,8 +1,8 @@
-import { Component, EventEmitter, OnInit, Output, Input } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, Input, inject } from '@angular/core';
 import { AccountService } from 'src/Services/account.service';
 import { CommentService } from 'src/Services/comment.service';
 import { JwtService } from 'src/Services/jwt.service';
-import { LocalStorageService } from 'src/Services/local-storage.service';
+import { AuthStorageService } from 'src/Services/auth-storage.service';
 import { CommenttModelRequest } from 'src/app/Models/CommentModel';
 import { environment } from 'src/environments/environment';
 
@@ -13,19 +13,22 @@ import { environment } from 'src/environments/environment';
 })
 export class CommentFormComponent implements OnInit{
 
-  constructor(private accontService: AccountService, private localStorage: LocalStorageService, private jwtService: JwtService, private commentService: CommentService){ }
+  constructor(private accontService: AccountService, private authStorage: AuthStorageService, private jwtService: JwtService, private commentService: CommentService){ }
 
   ngOnInit(): void {
-    this.isAuthorized = this.localStorage.getData('tokens');
-    this.localStorage.IsAuthozised.subscribe({
+    if (this.authStorage.getData('tokens')) {
+      this.isAuthorized = true;
+    }
+    this.authStorage.IsAuthorized.subscribe({
       next: res => {
-        this.isAuthorized = res;
+        this.isAuthorized = res as boolean;
+        console.log(res);
       }
     });
   }
 
   @Input() parrentId: string = '';
-  isAuthorized!: boolean;
+  isAuthorized: boolean = false;
   topicUrl = environment.topicURL;
     commentRequest: CommenttModelRequest = {
       commentText: '',
@@ -37,12 +40,12 @@ export class CommentFormComponent implements OnInit{
   logout() {
     this.accontService.logout().subscribe({
       next: res => {
-        this.localStorage.removeData('tokens');
         console.log(res);
+        this.authStorage.removeData("tokens");
       },
       error: err => {
-        this.localStorage.removeData('tokens');
-        console.error(err);
+        console.log(err);
+        this.authStorage.removeData("tokens");
       }
     });
   }
@@ -50,7 +53,8 @@ export class CommentFormComponent implements OnInit{
   sendMessage() {
     this.commentRequest.userId = this.jwtService.decodeJWT().nameid;
     this.commentRequest.parrentId = this.parrentId;
-    this.commentService.createComment(this.commentRequest).subscribe({
+    this.commentService.createComment(this.commentRequest)
+      .subscribe({
       next: res => {
         console.log(res);
       },

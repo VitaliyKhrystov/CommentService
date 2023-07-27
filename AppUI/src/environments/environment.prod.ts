@@ -1,5 +1,5 @@
 
-const baseApi = 'https://localhost:7200';
+const baseApi = 'https://commentservice.azurewebsites.net';
 
 export const environment = {
   production: true,
@@ -18,3 +18,4 @@ export const environment = {
 };
 
 // ng serve --configuration=production
+// ng build --configuration=production

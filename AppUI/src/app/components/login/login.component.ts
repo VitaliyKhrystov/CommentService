@@ -4,7 +4,7 @@ import { LoginModel } from 'src/app/Models/LoginModel';
 import { Router } from '@angular/router';
 import { TokenModel } from 'src/app/Models/TokenModel';
 import { LoginModelErrors } from 'src/app/Models/LoginModelErrors';
-import { LocalStorageService } from 'src/Services/local-storage.service';
+import { AuthStorageService } from 'src/Services/auth-storage.service';
 
 @Component({
   selector: 'app-login',
@@ -27,14 +27,14 @@ export class LoginComponent {
     Password: []
   }
 
-  constructor(private accountService: AccountService, private router:Router, private localStorageService:LocalStorageService) { }
+  constructor(private accountService: AccountService, private router:Router, private authStorage:AuthStorageService) { }
 
   login() {
     this.accountService.login(this.loginModel).
       subscribe({
         next: (response) => {
           this.tokenModel = response;
-          this.localStorageService.saveData("tokens", this.tokenModel);
+          this.authStorage.saveData("tokens", this.tokenModel);
           console.log(response);
           this.router.navigate(["/"]);
         },

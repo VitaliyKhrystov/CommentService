@@ -112,8 +112,8 @@ namespace CommentService.Controllers
             {
                 var commentList = commentsRespose;
 
-                subList = commentsRespose.Where(c => c.CommentId == comment.CommentId).Select(c => new CommentResponseModel() 
-                { 
+                subList = commentsRespose.Where(c => c.CommentId == comment.CommentId).Select(c => new CommentResponseModel()
+                {
                     CommentId = c.CommentId,
                     ParrentId = c.ParrentId,
                     UserId = c.UserId,
@@ -130,6 +130,35 @@ namespace CommentService.Controllers
             }
 
             return result;
+
+            //var com1 = new CommentResponseModel()
+            //{
+            //    CommentId = "1",
+            //    CommentText= "Comment 1",
+            //    CreatedAt= DateTime.Now,
+            //    DisLikes = default,
+            //    Likes = default,
+            //    ParrentId= "",
+            //    Replies = default,
+            //    TopicURL = "Test Topic",
+            //    UserId= "1",
+            //    UserNickName = "Egor"
+            //};
+            //var com2 = new CommentResponseModel()
+            //{
+            //    CommentId = "2",
+            //    CommentText = "Comment 2",
+            //    CreatedAt = DateTime.Now,
+            //    DisLikes = default,
+            //    Likes = default,
+            //    ParrentId = "",
+            //    Replies = default,
+            //    TopicURL = "Test Topic 2",
+            //    UserId = "1",
+            //    UserNickName = "Max"
+            //};
+
+            //return new List<CommentResponseModel> { com1, com2 };
         }
 
         [AllowAnonymous]

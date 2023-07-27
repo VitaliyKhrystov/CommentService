@@ -18,3 +18,4 @@ export const environment = {
 };
 
 // ng serve --configuration=development
+// ng build --configuration=development

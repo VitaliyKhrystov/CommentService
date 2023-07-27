@@ -4,19 +4,21 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { appRouts } from './app.routs';
-
 import { AppComponent } from './app.component';
 import { RegisterComponent } from './components/register/register.component';
 import { CommentFormComponent } from './components/comment-form/comment-form.component';
 import { LoginComponent } from './components/login/login.component';
 import { AccountService } from 'src/Services/account.service';
-import { LocalStorageService } from 'src/Services/local-storage.service';
+import { AuthStorageService } from 'src/Services/auth-storage.service';
 import { AuthInterceptorService } from 'src/Services/auth-interceptor.service';
 import { CommentComponent } from './components/comment/comment.component';
 import { ReplyComponent } from './components/reply/reply.component';
 import { ReplyFormComponent } from './components/reply/reply-form/reply-form.component';
 import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
+import { CommentService } from 'src/Services/comment.service';
+import { DataTransferService } from 'src/Services/data-transfer.service';
+import { JwtService } from 'src/Services/jwt.service';
 
 
 @NgModule({
@@ -39,14 +41,17 @@ import { ResetPasswordComponent } from './components/reset-password/reset-passwo
     RouterModule.forRoot(appRouts)
   ],
   providers: [
-        {
+    {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptorService,
       multi: true
     },
     AccountService,
     //The same{{provide:AccountService, useClass:AccountService}}
-    LocalStorageService
+    AuthStorageService,
+    CommentService,
+    DataTransferService,
+    JwtService
   ],
   bootstrap: [AppComponent]
 })

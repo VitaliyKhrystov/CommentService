@@ -21,6 +21,7 @@ export class CommentService {
   }
 
   createComment(comment: CommenttModelRequest) {
+    this.RefreshData.next(true);
     return this.http.post(baseApiURL + "/api/Comment/create", comment, { responseType: 'text' }).pipe(
       tap(() => {
         this.RefreshData.next(true);

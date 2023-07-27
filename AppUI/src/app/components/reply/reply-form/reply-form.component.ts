@@ -4,6 +4,7 @@ import { CommentService } from 'src/Services/comment.service';
 import { UpdateCommentModel } from 'src/app/Models/UpdateCommentModel';
 import { JwtService } from 'src/Services/jwt.service';
 import { DisLike, Like } from 'src/app/Models/CommentModel';
+import { AuthStorageService } from 'src/Services/auth-storage.service';
 
 @Component({
   selector: 'app-reply-form',
@@ -12,11 +13,21 @@ import { DisLike, Like } from 'src/app/Models/CommentModel';
 })
 export class ReplyFormComponent implements OnInit {
 
-  constructor(private commentComponent: CommentComponent, private commentService: CommentService, private jwtService: JwtService) { }
+  constructor(
+    private commentComponent: CommentComponent,
+    private commentService: CommentService,
+    private jwtService: JwtService,
+    private authStorage: AuthStorageService) { }
 
   ngOnInit(): void {
     this.currentMessage = this.comment.commentText;
     this.token = this.jwtService.decodeJWT();
+    this.isAuthorized = this.authStorage.getData("tokens") ? true : false;
+    this.authStorage.IsAuthorized.subscribe({
+      next: res => {
+        this.isAuthorized = res ? true : false;
+      }
+    });
     if (this.token) {
       this.userId = this.token["nameid"];
       this.role = this.token["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"];
@@ -42,6 +53,7 @@ export class ReplyFormComponent implements OnInit {
   isHidden: boolean = false;
   isEdit: boolean = false;
   isDelete: boolean = true;
+  isAuthorized!: boolean;
   imgLikeInvert!: boolean;
   imgDislikeInvert!: boolean;
   row: number = 1;
@@ -117,7 +129,7 @@ export class ReplyFormComponent implements OnInit {
 
   isCanEditOrDelete(): boolean {
     if (this.userId) {
-      if (this.comment.userId == this.userId || this.role == 'Admin' || this.role == 'Moderator') {
+      if ((this.comment.userId == this.userId || this.role == 'Admin' || this.role == 'Moderator') && this.isAuthorized) {
         return true;
       }
    }

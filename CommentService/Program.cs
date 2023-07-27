@@ -59,6 +59,7 @@ namespace CommentService
             // Configure the HTTP request pipeline.
 
             app.UseHttpsRedirection();
+            app.UseDeveloperExceptionPage();
 
             app.UseCors(policy => policy.AllowAnyMethod().AllowAnyHeader().AllowAnyOrigin());
 

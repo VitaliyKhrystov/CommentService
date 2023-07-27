@@ -1,60 +1,65 @@
-import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
+import { HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, map, tap } from 'rxjs';
+import { Observable, catchError, map, switchMap, tap, throwError } from 'rxjs';
 import { TokenModel } from 'src/app/Models/TokenModel';
 import { AccountService } from './account.service';
-import { LocalStorageService } from './local-storage.service';
+import { AuthStorageService } from './auth-storage.service';
 import { environment } from 'src/environments/environment';
 import { Router } from '@angular/router';
 
 @Injectable()
 export class AuthInterceptorService implements HttpInterceptor {
 
-  constructor(private accountService: AccountService, private localStorage: LocalStorageService, private router:Router) { }
+  constructor(private accountService: AccountService, private authStorage: AuthStorageService, private router:Router) { }
 
-  tokenFromLocalStorage: TokenModel = {
-    accessToken: '',
-    refreshToken:''
-  };
-  newTokens: TokenModel = {
-    accessToken: '',
-    refreshToken:''
-  };
+  // tokensFromLocalStorage: TokenModel = {
+  //   accessToken: '',
+  //   refreshToken:''
+  // };
+  // newTokens: TokenModel = {
+  //   accessToken: '',
+  //   refreshToken:''
+  // };
 
   baseApiUrl: string = environment.apiURL;
   excludedURLs: string[] = environment.allowAnonymousURL;
 
-  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    this.tokenFromLocalStorage = JSON.parse(this.localStorage.getData("tokens"));
-    if (this.tokenFromLocalStorage && !this.excludedURLs.includes(req.url)) {
-      this.accountService.refreshToken(this.tokenFromLocalStorage).subscribe({
-        next: response => {
-          this.newTokens = response;
-          window.localStorage.removeItem('tokens');
-          this.localStorage.saveData("tokens", this.newTokens);
-        },
-        error: err => {
-          this.localStorage.removeData("tokens");
-          this.router.navigate(['login']);
-          console.log(err);
-
-        }
-      });
-      req = req.clone({
-        setHeaders: {Authorization: `Bearer ${this.newTokens.accessToken}`}
+  intercept(req: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
+    const tokensFromLocalStorage: TokenModel = JSON.parse(this.authStorage.getData("tokens"));
+    let request = req;
+    if (tokensFromLocalStorage  && !this.excludedURLs.includes(req.url)) {
+      request = req.clone({
+        setHeaders: {Authorization:`Bearer ${tokensFromLocalStorage.accessToken}`}
       })
     }
-    return next.handle(req)
-    //   .pipe(
-    //   tap({
-    //     error: err => {
-    //       if (err.status === 401) {
-    //         console.log('User is not authenticated!')
-    //         this.localStorage.removeData("tokens");
-    //       }
-    //     }
-    // })
-    // )
+    return next.handle(request).pipe(
+      catchError((err: any) => {
+        if (err instanceof HttpErrorResponse) {
+          if (err.status === 401) {
+            return this.handleUnAuthorizedError(req, next);
+          }
+        }
+        return throwError(() => err);
+      }));
+  }
 
+  handleUnAuthorizedError(request:HttpRequest<any>, next:HttpHandler) {
+    let tokens: TokenModel = JSON.parse(this.authStorage.getData("tokens"));
+    return this.accountService.refreshToken(tokens).pipe(
+      switchMap((data: TokenModel) => {
+        this.authStorage.saveData("tokens", data);
+        const newRequest = request.clone({
+          setHeaders: { Authorization: `Bearer ${data.accessToken}` }
+        })
+        return next.handle(newRequest);
+      }),
+      catchError((err) => {
+        console.log(err);
+        if (err.error === "Invalid access token or refresh token") {
+          this.authStorage.removeData("tokens");
+        }
+        return throwError(() => err)
+      })
+    )
   }
 }
