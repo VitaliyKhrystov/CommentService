@@ -23,8 +23,8 @@ export class LoginComponent {
   nickNameError: string = '';
   passwordError: string = '';
   errors: LoginModelErrors = {
-    NickName: [],
-    Password: []
+    NickName: [] = [],
+    Password: [] = []
   }
 
   constructor(private accountService: AccountService, private router:Router, private authStorage:AuthStorageService) { }
@@ -45,7 +45,8 @@ export class LoginComponent {
             this.passwordError = '';
             this.nickNameError = err.error;
           } else if (typeof err.error.Password === "string") {
-              this.errors = new LoginModelErrors();
+            this.errors = new LoginModelErrors();
+              this.nickNameError = '';
               this.passwordError = err.error.Password
           } else {
               this.nickNameError = '';
