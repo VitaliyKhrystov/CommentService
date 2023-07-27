@@ -5,18 +5,17 @@ namespace CommentService
     public class ValidateYear: ValidationAttribute
     {
         private int fromYear;
-        private int tillYear;
-
-        public ValidateYear(int fromYear, int tillYear)
+        private int NowYear;
+        public ValidateYear()
         {
-            this.fromYear = fromYear;
-            this.tillYear = tillYear;
-            ErrorMessage = $"Year can be between {fromYear} and {tillYear}";
+            fromYear = DateTime.Now.Year - 110;
+            NowYear = DateTime.Now.Year;
+            ErrorMessage = $"Year can be between {fromYear} and {NowYear}";
         }
 
         public override bool IsValid(object? value)
         {
-            if (value != null && ((int)value >= fromYear && (int)value <= tillYear)) 
+            if (value != null && ((int)value >= fromYear && (int)value <= NowYear)) 
             { 
                 return true ;
             }

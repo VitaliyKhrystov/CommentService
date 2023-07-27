@@ -2,9 +2,9 @@
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
-namespace CommentService.Models
+namespace CommentService.Models.UserModels
 {
-    public class RegisterModel
+    public class UserRegisterModel
     {
         [Required]
         public string NickName { get; set; }
@@ -18,7 +18,7 @@ namespace CommentService.Models
         public string Password { get; set; }
 
         [Required]
-        [ValidateYear(1923, 2123)]
+        [ValidateYear()]
         public int BirthYear { get; set; }
         public Roles RoleName { get; set; }
     }

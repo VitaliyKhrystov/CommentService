@@ -72,7 +72,7 @@ namespace CommentService.Controllers
         }
 
         [HttpPost ("updateUser")]
-        public async Task<IActionResult> UpdateUserAsync(RegisterModel model)
+        public async Task<IActionResult> UpdateUserAsync(UserRegisterModel model)
         {
             if (ModelState.IsValid)
             {

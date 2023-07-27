@@ -12,16 +12,6 @@ export class AuthInterceptorService implements HttpInterceptor {
 
   constructor(private accountService: AccountService, private authStorage: AuthStorageService, private router:Router) { }
 
-  // tokensFromLocalStorage: TokenModel = {
-  //   accessToken: '',
-  //   refreshToken:''
-  // };
-  // newTokens: TokenModel = {
-  //   accessToken: '',
-  //   refreshToken:''
-  // };
-
-  baseApiUrl: string = environment.apiURL;
   excludedURLs: string[] = environment.allowAnonymousURL;
 
   intercept(req: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {

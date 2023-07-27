@@ -12,7 +12,7 @@
       <label for="userEmail" class="form-label">Email address</label>
       <input type="email" class="form-control" id="userEmail" name="email" [(ngModel)]="registerModel.email" />
       <div class="error_message" *ngIf="errors.includes('Email') && !errors.includes('exception')">
-        {{ errors.substring(errors.indexOf("Email"), errors.indexOf("]")+1) }}</div>
+        {{ errors.substring(errors.indexOf("Email")-1, errors.indexOf("]")+1) }}</div>
     </div>
     <div class="p-2">
       <label for="userPassword" class="form-label">Password</label>

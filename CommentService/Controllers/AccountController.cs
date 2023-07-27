@@ -36,7 +36,7 @@ namespace CommentService.Controllers
         }
 
         [HttpPost ("register")]
-        public async Task<IActionResult> RegisterAsync(RegisterModel model)
+        public async Task<IActionResult> RegisterAsync(UserRegisterModel model)
         {
             var users = await userRepository.GetAllUsersAsync();
             if (users.Any(u => u.NickName == model.NickName))
@@ -158,13 +158,6 @@ namespace CommentService.Controllers
 
             if (user == null || user.RefreshToken != tokenModel.RefreshToken || user.RefreshTokenExpiryTime <= DateTime.Now)
             {
-                //if (user != null)
-                //{
-                //    user.RefreshToken = default;
-                //    user.RefreshTokenExpiryTime = default;
-                //    await userRepository.UpdateUserAsync(user);
-                //}
-
                 return BadRequest("Invalid access token or refresh token");
             }
 
