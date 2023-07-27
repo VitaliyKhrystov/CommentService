@@ -1,5 +1,4 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { CommentComponent } from '../../comment/comment.component';
 import { CommentService } from 'src/Services/comment.service';
 import { UpdateCommentModel } from 'src/app/Models/UpdateCommentModel';
 import { JwtService } from 'src/Services/jwt.service';
@@ -14,7 +13,6 @@ import { AuthStorageService } from 'src/Services/auth-storage.service';
 export class ReplyFormComponent implements OnInit {
 
   constructor(
-    private commentComponent: CommentComponent,
     private commentService: CommentService,
     private jwtService: JwtService,
     private authStorage: AuthStorageService) { }
@@ -102,7 +100,6 @@ export class ReplyFormComponent implements OnInit {
       },
       error: err => {
         console.log(err);
-        // this.comment.commentText = this.currentMessage;
       }
     });
     this.isEdit = false;

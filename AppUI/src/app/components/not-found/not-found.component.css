@@ -1,0 +1,14 @@
+.not-found{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  margin: 1em;
+  width: 100%;
+  min-height: 10em;
+  border: 1em solid #CAD2C5
+}
+
+.h1-not-found{
+  color: #2F3E46;
+}

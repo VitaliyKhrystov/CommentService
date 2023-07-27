@@ -19,6 +19,7 @@ import { ResetPasswordComponent } from './components/reset-password/reset-passwo
 import { CommentService } from 'src/Services/comment.service';
 import { DataTransferService } from 'src/Services/data-transfer.service';
 import { JwtService } from 'src/Services/jwt.service';
+import { NotFoundComponent } from './components/not-found/not-found.component';
 
 
 @NgModule({
@@ -31,7 +32,8 @@ import { JwtService } from 'src/Services/jwt.service';
     ReplyComponent,
     ReplyFormComponent,
     ForgotPasswordComponent,
-    ResetPasswordComponent
+    ResetPasswordComponent,
+    NotFoundComponent
   ],
   imports: [
     BrowserModule,

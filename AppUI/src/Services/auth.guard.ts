@@ -1,10 +1,12 @@
 import { CanActivateFn } from '@angular/router';
-import {inject} from '@angular/core';
-import { AccountService } from './account.service';
+import { Inject, inject } from '@angular/core';
 import { Router } from '@angular/router';
 
 export const authGuard:CanActivateFn = () =>
-  {
-
-  return true;
+{
+  const router = inject(Router);
+  setInterval(() => {
+    router.navigate(['/']);
+    }, 2000)
+    return true;
   };

@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { AccountService } from 'src/Services/account.service';
 import { DataTransferService } from 'src/Services/data-transfer.service';
-import { ForgotPassword } from 'src/app/Models/ForgotPassword';
 
 @Component({
   selector: 'app-forgot-password',

@@ -87,7 +87,7 @@ namespace CommentService.Controllers
             if (user == null)
             {
                 logger.LogError($"Not found: NickName - {model.NickName}");
-                return Unauthorized($"Not found: NickName - {model.NickName}. Please register!");
+                return BadRequest($"Not found: NickName - {model.NickName}. Please register!");
             }
                 
             if (model.Password != encryptDecryptData.DecryptDataFromBase64(user.Password))

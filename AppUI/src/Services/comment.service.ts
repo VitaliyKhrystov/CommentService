@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, Subject, catchError, tap } from 'rxjs';
+import { Subject, tap } from 'rxjs';
 import { CommenttModelRequest, DisLike, Like } from 'src/app/Models/CommentModel';
 import { UpdateCommentModel } from 'src/app/Models/UpdateCommentModel';
 import { environment } from 'src/environments/environment';
