@@ -9,6 +9,7 @@ import { ForgotPasswordComponent } from './components/forgot-password/forgot-pas
 import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
 import { authGuard } from 'src/Services/auth.guard';
 import { NotFoundComponent } from './components/not-found/not-found.component';
+import { ContactsComponent } from './components/contacts/contacts.component';
 
 export const appRouts: Routes = [
   { path: '', component: CommentComponent  },
@@ -19,5 +20,6 @@ export const appRouts: Routes = [
   { path: 'reply-form', component: ReplyComponent },
   { path: 'forgot-password', component: ForgotPasswordComponent },
   { path: 'reset-password', component: ResetPasswordComponent },
-  { path: '**', component:NotFoundComponent, canActivate:[authGuard]}
+  { path: 'contacts', component: ContactsComponent },
+  { path: '**', component:NotFoundComponent}
 ]

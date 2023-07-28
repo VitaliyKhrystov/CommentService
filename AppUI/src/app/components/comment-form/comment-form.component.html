@@ -1,4 +1,4 @@
-<div class="">
+<div>
   <form class="form" #form="ngForm" (ngSubmit)="sendMessage()">
     <textarea id="textarea" placeholder="Your comment" class="comment_text" name="commentText" [(ngModel)]="commentRequest.commentText" [disabled]="!isAuthorized" ></textarea>
 

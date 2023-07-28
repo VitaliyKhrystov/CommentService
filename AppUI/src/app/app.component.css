@@ -1,0 +1,32 @@
+.main-content{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.title{
+  margin: 1em 0 0.5em 0;
+  color: #2f3e46;
+}
+
+.description{
+  width: 50%;
+  color: #354f52;
+}
+
+.paragraph{
+  margin-bottom: 10px;
+}
+
+.main-text{
+  font-weight: 500;
+}
+
+.source-code-link {
+  text-decoration: none;
+  color: #354f52;
+}
+
+.comment-service{
+  width: 500px;
+}

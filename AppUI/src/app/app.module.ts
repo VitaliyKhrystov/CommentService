@@ -20,6 +20,7 @@ import { CommentService } from 'src/Services/comment.service';
 import { DataTransferService } from 'src/Services/data-transfer.service';
 import { JwtService } from 'src/Services/jwt.service';
 import { NotFoundComponent } from './components/not-found/not-found.component';
+import { ContactsComponent } from './components/contacts/contacts.component';
 
 
 @NgModule({
@@ -33,7 +34,8 @@ import { NotFoundComponent } from './components/not-found/not-found.component';
     ReplyFormComponent,
     ForgotPasswordComponent,
     ResetPasswordComponent,
-    NotFoundComponent
+    NotFoundComponent,
+    ContactsComponent
   ],
   imports: [
     BrowserModule,

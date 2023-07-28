@@ -1,0 +1,28 @@
+.contacts{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #cad2c5;
+  margin-top: 1em;
+  width: 500px;
+}
+
+.h1-contacts{
+  margin-top: 1em;
+}
+
+.contacts-box{
+  background-color: white;
+  margin: 1em;
+  padding: 10px;
+}
+
+.contact-info{
+  font-size: 1em;
+  margin-bottom: 0.3em;
+}
+
+.img-contacts{
+  width: 1em;
+  margin-right: 0.3em;
+}

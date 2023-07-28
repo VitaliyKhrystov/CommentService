@@ -1,1 +1,33 @@
-<router-outlet></router-outlet>
+<div class="conteiner home-page">
+  <nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="./">Demo Comment Service</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarScroll">
+        <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="#">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/contacts">Contacts</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <div class="main-content">
+    <h1 class="title">Demo Comment Service</h1>
+    <div class="description">
+      <p class="paragraph"><span class="main-text">CommentService</span> is simple comment engine, which can be embedded into blogs, articles or any other place where readers add comments.</p>
+      <p class="paragraph"> <span class="main-text">Technologies’ stack:</span> C#, .NET Core, AspNet WebApi, TypeScript, Angular, CSS, HTML, SQL, MSSQL</p>
+      <p class="paragraph"> <span class="main-text">Source Code: </span> <a class="source-code-link" href="https://github.com/VitaliyKhrystov/CommentService" target="_blank">https://github.com/VitaliyKhrystov/CommentService</a></p>
+        <hr>
+    </div>
+    <div class="comment-service">
+     <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>
+

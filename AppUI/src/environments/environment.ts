@@ -14,7 +14,14 @@ export const environment = {
     baseApi + '/api/Comment/getAllComments',
     baseApi + '/api/Comment/getCommentById'
   ],
-  topicURL: "http://test.com"
+  topicURL: "http://test.com",
+  contacts: {
+    email: "vitalii_khrystov@proton.me",
+    linkedin: "https://www.linkedin.com/in/khrystov-vitalii-58946b131/",
+    github: "https://github.com/VitaliyKhrystov",
+    telegram: "Vitaliy Khrystov",
+    address: "Ukraine, Kyiv"
+  }
 };
 
 // ng serve
